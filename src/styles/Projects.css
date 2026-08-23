@@ -1,0 +1,32 @@
+.projects {
+    min-height: 100vh;
+    padding: 80px 5%;
+}
+
+.projects h1 {
+    font-size: 4rem;
+    font-family: 'Rubik Scribble', sans-serif;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 100;
+}
+
+.projects-block {
+    background: white;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.projects h2 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.projects p {
+    font-size: smaller;
+    margin-bottom: 15px;
+}

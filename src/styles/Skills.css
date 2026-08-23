@@ -1,0 +1,37 @@
+.skills {
+    min-height: 100vh;
+    padding: 80px 5%;
+}
+
+.skills h1 {
+    font-size: 4rem;
+    font-family: 'Rubik Scribble', sans-serif;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 100;
+}
+
+.skills-block {
+    background: white;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.skills h2 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.skills p {
+    font-size: smaller;
+    margin-bottom: 15px;
+}
+
+.skill-summary {
+    font-size: smaller;
+    font-weight: 500;
+}

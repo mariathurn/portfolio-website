@@ -1,0 +1,39 @@
+.about {
+    min-height: 100vh;
+    padding: 80px 5%;
+}
+
+.about h1 {
+    font-size: 4rem;
+    font-family: 'Rubik Scribble', sans-serif;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 100;
+}
+
+.welcome-banner {
+    display: block;
+    width: 90%;
+    max-width: 1400px;
+    height: auto;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.profile-picture {
+    display: block;
+    max-height: 400px;
+}
+
+.about-block {
+    display: flex;
+    padding-top: 30px;
+    gap: 30px;
+
+}
+
+.text-block {
+    color: white;
+    font-size: 1.2rem;
+    font-family: 'Rubik', sans-serif;
+}
