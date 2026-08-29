@@ -12,7 +12,7 @@ function Projects() {
                 <article>
                     <h2>Donut Wars – Survival Game</h2>
                     <p>I developed a 2D survival game in Unity where players defend a bakery from hungry creatures by feeding them baked goods. The project combines gameplay programming, player interaction, game-state management, and visual feedback to create a playful and engaging experience.</p>
-                    <a href="https://mariagamingcorner.itch.io/donut-wars" target="_blank">
+                    <a className="link-game" href="https://mariagamingcorner.itch.io/donut-wars" target="_blank">
                         Play Donut Wars
                     </a>
                 </article>

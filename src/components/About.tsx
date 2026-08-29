@@ -19,7 +19,7 @@ function About() {
             where I can grow as a developer, contribute to meaningful projects,
             and continue learning every day.
           </p><br />
-          <p>Click CV for more information.</p>
+          <a className="cv" href="src/assets/CV.pdf" target="_blank">Click here for my CV.</a>
         </article>
 
       </div>

@@ -37,3 +37,12 @@
     font-size: 1.2rem;
     font-family: 'Rubik', sans-serif;
 }
+
+.cv {
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+}
+
+a:hover {
+    color: orange;
+}
