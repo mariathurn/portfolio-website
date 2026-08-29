@@ -50,3 +50,8 @@ footer {
     display: flex;
     justify-content: center;
 }
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
