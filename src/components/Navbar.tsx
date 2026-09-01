@@ -10,6 +10,30 @@ function Navbar() {
   const toggleMenu = () => setIsOpen(prev => !prev);
   const closeMenu = () => setIsOpen(false);
 
+  const [navColor, setNavColor] = useState("#2E653D");
+
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>("main section");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const color = getComputedStyle(entry.target).backgroundColor;
+            setNavColor(color);
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -30,7 +54,8 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar">
+    <nav className="navbar"
+      style={{ backgroundColor: navColor }}>
       <div className="navbar-container">
 
         <a href="#about" className="navbar-logo">
@@ -67,7 +92,6 @@ function Navbar() {
           <li><a href="#projects" onClick={closeMenu}>Projects</a></li>
           <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
         </ul>
-
       </div>
     </nav>
   );

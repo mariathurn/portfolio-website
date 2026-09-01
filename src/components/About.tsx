@@ -4,7 +4,7 @@ import profilePicture from '../assets/profile-picture.png'
 
 function About() {
   return (
-    <section id="about" className="about">
+    <section id="about" className="about" style={{ backgroundColor: "#2E653D" }}>
       <img className="welcome-banner" src={welcomeBanner} alt="Welcome Banner" />
       <div className='about-block'>
         <img className="profile-picture" src={profilePicture} alt="Profile Picture" />

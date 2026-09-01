@@ -2,10 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Scribble&family=Rubik:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik+One&family=Rubik:wght@400;500;600&display=swap');
 
+
+
 :root {
   --navbar-height: 64px;
-
-  --color-green: #32651D;
   --color-white: #fff;
   --color-yellow: #e7df03;
 }
@@ -31,20 +31,4 @@ main {
 section {
   min-height: 100vh;
   padding: 80px 5%;
-}
-
-#about {
-  background: #32651D;
-}
-
-#skills {
-  background: #32651D;
-}
-
-#projects {
-  background: #32651D;
-}
-
-#contact {
-  background: #32651D;
 }

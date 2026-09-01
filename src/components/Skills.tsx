@@ -2,7 +2,7 @@ import '../styles/Skills.css';
 
 function Skills() {
     return (
-        <section id='skills' className='skills'>
+        <section id='skills' className='skills' style={{ backgroundColor: "#335F7A" }}>
             <h1>Skills</h1>
             <div className='skills-block'>
                 <article>

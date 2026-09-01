@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  
+
   height: var(--navbar-height);
   width: 100%;
   background-color: var(--color-green);
@@ -11,6 +11,8 @@
   font-weight: 500;
   font-size: 1.5rem;
   text-transform: uppercase;
+
+  transition: background-color 0.4s ease;
 }
 
 .navbar-container {
@@ -40,10 +42,10 @@
 
 .navbar-menu {
   display: flex;
-  gap: 50px;
   margin-left: auto;
   padding-top: 10px;
   list-style: none;
+  gap: 16px;
 }
 
 .navbar-menu a {

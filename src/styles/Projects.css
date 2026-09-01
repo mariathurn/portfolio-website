@@ -1,6 +1,7 @@
 .projects {
     min-height: 100vh;
     padding: 80px 5%;
+    background-color: #9C3435;
 }
 
 .projects h1 {
@@ -9,6 +10,7 @@
     text-transform: uppercase;
     color: white;
     font-weight: 100;
+
 }
 
 .projects-block {
