@@ -5,7 +5,7 @@
 
   height: var(--navbar-height);
   width: 100%;
-  background-color: var(--color-green);
+  background-color: #2E653D;
   color: var(--color-white);
 
   font-weight: 500;
@@ -83,9 +83,8 @@
   position: absolute;
   top: var(--navbar-height);
   left: 0;
-
   width: 100%;
-  background-color: var(--color-green);
+  background-color: #2E653D;
   list-style: none;
 }
 
@@ -113,9 +112,24 @@
   .navbar-hamburger {
     display: flex;
     margin-left: auto;
+    padding-right: 1%;
   }
 
   .navbar-mobile-menu.active {
     display: block;
+  }
+
+  .navbar-logo {
+    display: flex;
+    flex-shrink: 10;
+    margin-right: auto;
+    align-items: center;
+  }
+
+  .navbar-logo img {
+    display: block;
+    height: 32px;
+    width: auto;
+
   }
 }

@@ -23,20 +23,26 @@
 
 .profile-picture {
     display: block;
-    max-height: 400px;
+    max-height: 350px;
+    border-color: aliceblue;
+    border-radius: 30px;
+    border-style: dashed;
 }
 
 .about-block {
     display: flex;
     padding-top: 30px;
     gap: 30px;
-
+    align-items: center;
+    justify-content: center;
 }
 
 .text-block {
     color: white;
     font-size: 1.2rem;
     font-family: 'Rubik', sans-serif;
+    padding-left: 20px;
+    max-width: 50%;
 }
 
 .cv {
@@ -46,4 +52,47 @@
 
 a:hover {
     color: orange;
+}
+
+@media (max-width: 700px) {
+    .about {
+        min-height: auto;
+        padding: 30px 6% 56px;
+    }
+
+    .text-block {
+        padding-left: 0px;
+    }
+
+    .welcome-banner {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .about-block {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding-top: 16px;
+    }
+
+    .profile-picture {
+        width: min(72vw, 180px);
+        max-height: none;
+        height: auto;
+    }
+
+    .text-block {
+        width: 100%;
+        font-size: 1rem;
+        line-height: 1.55;
+        max-width: 100%;
+
+    }
+
+    .about h1 {
+        font-size: clamp(2.5rem, 14vw, 3.5rem);
+        line-height: 1;
+        margin-bottom: 16px;
+    }
 }
