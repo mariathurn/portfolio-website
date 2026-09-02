@@ -82,9 +82,9 @@ function Navbar() {
           <span></span>
           <span></span>
         </div>
-
         <ul
           className={`navbar-mobile-menu ${isOpen ? 'active' : ''}`}
+          style={{ backgroundColor: navColor }}
           ref={menuRef}
         >
           <li><a href="#about" onClick={closeMenu}>About</a></li>
