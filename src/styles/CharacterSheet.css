@@ -62,8 +62,7 @@
 
 .sheet-body {
     display: grid;
-    /* Abilities keep their box width; traits & inventory take the rest */
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: 2fr 2fr;
     gap: 24px;
     margin-top: 24px;
 }
@@ -74,8 +73,9 @@
 .sheet-abilities {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Equal row heights that stretch to match the traits/inventory column */
+    grid-auto-rows: 1fr;
     gap: 16px;
-    align-content: start;
 }
 
 .ability {
@@ -126,6 +126,11 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+/* Inventory grows so both columns end on the same line */
+.sheet-side .sheet-box:last-child {
+    flex: 1;
 }
 
 .sheet-box {
@@ -183,7 +188,7 @@
 
 @media (max-width: 750px) {
     .sheet-details {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .character-sheet {

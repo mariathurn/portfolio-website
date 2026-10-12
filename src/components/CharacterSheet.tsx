@@ -15,7 +15,7 @@ const abilities = [
     { name: 'Curiosity', score: 17, note: 'From graphic design to transformer models' },
     { name: 'Debugging', score: 14, note: '+2 when armed with console.log' },
     { name: 'Teamwork', score: 16, note: 'Speaks fluent Designer and Developer' },
-    { name: 'Schafkopf', score: 20, note: 'Natural 20. Will teach you.' },
+    { name: 'Card Games', score: 20, note: 'Natural 20. Will teach you.' },
 ];
 
 const traits = [
