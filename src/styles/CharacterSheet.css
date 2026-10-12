@@ -28,11 +28,28 @@
 
 .sheet-header {
     display: grid;
-    grid-template-columns: minmax(220px, 1fr) 2fr;
+    grid-template-columns: auto minmax(220px, 1fr) 2fr;
     gap: 24px;
     align-items: end;
     padding-bottom: 20px;
     border-bottom: 3px solid var(--sheet-line);
+}
+
+/* Undertale-style frame: black box with a white inner border */
+.sheet-portrait {
+    width: 112px;
+    padding: 10px 10px 0;
+    background-color: #000;
+    border: 3px solid var(--sheet-line);
+    border-radius: 6px;
+    outline: 2px solid var(--color-white);
+    outline-offset: -7px;
+}
+
+.pixel-portrait {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .sheet-name h2 {
@@ -174,13 +191,26 @@
 }
 
 @media (max-width: 900px) {
-    .sheet-header,
     .sheet-body {
         grid-template-columns: 1fr;
+    }
+
+    /* Portrait and name side by side, details below */
+    .sheet-header {
+        grid-template-columns: auto 1fr;
+    }
+
+    .sheet-details {
+        grid-column: 1 / -1;
     }
 }
 
 @media (max-width: 750px) {
+    .sheet-portrait {
+        width: 84px;
+        padding: 8px 8px 0;
+    }
+
     .sheet-details {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
