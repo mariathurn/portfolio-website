@@ -9,6 +9,11 @@
   --color-rust: #AB5135;
   --color-text: #1f2328;
   --color-text-muted: #57606a;
+  --color-card: #fff;
+  --color-tag-bg: #eef1f3;
+  --color-media-border: #ddd;
+  --button-dark-bg: #1f2328;
+  --button-dark-text: #fff;
 
   --font-body: 'Rubik', sans-serif;
   --font-display: 'Rubik One', sans-serif;
@@ -17,6 +22,26 @@
   --radius-card: 16px;
   --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.18);
   --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.26);
+}
+
+/* Night mode, toggled by the lever in the navbar (ThemeLever.tsx) */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-green: #173322;
+  --color-blue: #172b3b;
+  --color-red: #3b1a1e;
+  --color-rust: #45271b;
+  --color-text: #ebe6f3;
+  --color-text-muted: #a9a2b8;
+  --color-card: #211b31;
+  --color-tag-bg: #332a4a;
+  --color-media-border: #3a3350;
+  --button-dark-bg: #ebe6f3;
+  --button-dark-text: #1d1830;
+
+  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.45);
+  --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.55);
 }
 
 * {
@@ -42,6 +67,7 @@ main {
 
 section {
   padding: 32px 5% 96px;
+  transition: background-color 0.4s ease;
 }
 
 /* Avoid single words hanging alone on the last line */
@@ -85,7 +111,8 @@ button:focus-visible {
 /* Cards */
 
 .card {
-  background-color: var(--color-white);
+  background-color: var(--color-card);
+  transition: background-color 0.4s ease, color 0.4s ease;
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   padding: 28px;
@@ -117,7 +144,7 @@ button:focus-visible {
   font-weight: 500;
   padding: 4px 12px;
   border-radius: 999px;
-  background-color: #eef1f3;
+  background-color: var(--color-tag-bg);
   color: var(--color-text);
 }
 
@@ -159,14 +186,15 @@ button:focus-visible {
 }
 
 .button-dark {
-  background-color: var(--color-text);
-  border-color: var(--color-text);
-  color: var(--color-white);
+  background-color: var(--button-dark-bg);
+  border-color: var(--button-dark-bg);
+  color: var(--button-dark-text);
 }
 
 .button-dark:hover {
   background-color: var(--color-red);
   border-color: var(--color-red);
+  color: var(--color-white);
 }
 
 @media (max-width: 750px) {

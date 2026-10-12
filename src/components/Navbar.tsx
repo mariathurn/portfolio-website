@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import '../styles/Navbar.css';
-import mariaLogo from '../assets/logo.png';
+import mariaName from '../assets/logo-name.png';
+import ThemeLever from './ThemeLever';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,15 @@ function Navbar() {
   const toggleMenu = () => setIsOpen(prev => !prev);
   const closeMenu = () => setIsOpen(false);
 
-  const [navColor, setNavColor] = useState("var(--color-green)");
+  // Colour variable per section, so the navbar also follows dark mode
+  const sectionColors: Record<string, string> = {
+    about: 'var(--color-green)',
+    skills: 'var(--color-blue)',
+    projects: 'var(--color-red)',
+    contact: 'var(--color-rust)',
+  };
+  const [activeSection, setActiveSection] = useState('about');
+  const navColor = sectionColors[activeSection] ?? sectionColors.about;
 
   useEffect(() => {
     const sections = document.querySelectorAll<HTMLElement>("main section");
@@ -18,8 +27,7 @@ function Navbar() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const color = getComputedStyle(entry.target).backgroundColor;
-            setNavColor(color);
+            setActiveSection(entry.target.id);
           }
         });
       },
@@ -61,13 +69,16 @@ function Navbar() {
       style={{ backgroundColor: navColor }}>
       <div className="navbar-container">
 
-        <a href="#about" className="navbar-logo">
-          <img
-            className="maria-logo"
-            src={mariaLogo}
-            alt="Maria Thurn"
-          />
-        </a>
+        <div className="navbar-brand">
+          <ThemeLever />
+          <a href="#about" className="navbar-logo">
+            <img
+              className="maria-logo"
+              src={mariaName}
+              alt="Maria Thurn"
+            />
+          </a>
+        </div>
 
         <ul className="navbar-menu">
           <li><a href="#about">About</a></li>

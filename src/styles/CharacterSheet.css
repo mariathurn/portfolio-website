@@ -3,6 +3,10 @@
     --sheet-ink: #2b2620;
     --sheet-line: #2b2620;
     --sheet-muted: #6b6257;
+    --sheet-box: #fff;
+    --portrait-bg: #ece6fb;
+    /* Pixel sparkles & stars, repeated as a tile */
+    --portrait-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cg fill='%23b8a6ea'%3E%3Crect x='3' y='1' width='1' height='5'/%3E%3Crect x='1' y='3' width='5' height='1'/%3E%3Crect x='11' y='9' width='1' height='3'/%3E%3Crect x='10' y='10' width='3' height='1'/%3E%3C/g%3E%3Cg fill='%23d3c8f3'%3E%3Crect x='13' y='3' width='1' height='1'/%3E%3Crect x='6' y='12' width='1' height='1'/%3E%3Crect x='9' y='6' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E");
 
     max-width: 1100px;
     margin: 72px auto 0;
@@ -12,6 +16,18 @@
     border: 3px solid var(--sheet-line);
     border-radius: var(--radius-card);
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.25);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Night mode: dark paper, light ink */
+:root[data-theme="dark"] .character-sheet {
+    --sheet-paper: #1c1727;
+    --sheet-ink: #ece4d4;
+    --sheet-line: #ece4d4;
+    --sheet-muted: #b3a998;
+    --sheet-box: #251f33;
+    --portrait-bg: #291e44;
+    --portrait-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cg fill='%235e4b99'%3E%3Crect x='3' y='1' width='1' height='5'/%3E%3Crect x='1' y='3' width='5' height='1'/%3E%3Crect x='11' y='9' width='1' height='3'/%3E%3Crect x='10' y='10' width='3' height='1'/%3E%3C/g%3E%3Cg fill='%2345377a'%3E%3Crect x='13' y='3' width='1' height='1'/%3E%3Crect x='6' y='12' width='1' height='1'/%3E%3Crect x='9' y='6' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .sheet-label {
@@ -50,8 +66,7 @@
     overflow: hidden;
     border: 2px solid var(--sheet-line);
     border-radius: 12px;
-    /* Pixel sparkles & stars, repeated as a tile */
-    background: #ece6fb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cg fill='%23b8a6ea'%3E%3Crect x='3' y='1' width='1' height='5'/%3E%3Crect x='1' y='3' width='5' height='1'/%3E%3Crect x='11' y='9' width='1' height='3'/%3E%3Crect x='10' y='10' width='3' height='1'/%3E%3C/g%3E%3Cg fill='%23d3c8f3'%3E%3Crect x='13' y='3' width='1' height='1'/%3E%3Crect x='6' y='12' width='1' height='1'/%3E%3Crect x='9' y='6' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 32px 32px;
+    background: var(--portrait-bg) var(--portrait-pattern) 0 0 / 32px 32px;
     image-rendering: pixelated;
 }
 
@@ -115,7 +130,7 @@
     padding: 14px 10px 12px;
     border: 2px solid var(--sheet-line);
     border-radius: 14px;
-    background-color: var(--color-white);
+    background-color: var(--sheet-box);
     transition: transform 0.2s ease;
 }
 
@@ -159,7 +174,7 @@
     padding: 16px 18px;
     border: 2px solid var(--sheet-line);
     border-radius: 14px;
-    background-color: var(--color-white);
+    background-color: var(--sheet-box);
 }
 
 .sheet-box-title {

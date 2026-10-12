@@ -10,6 +10,13 @@
     content="Portfolio of Maria Thurn, a frontend developer in Copenhagen with a background in graphic design and an MSc in IT & Cognition.">
   <meta name="theme-color" content="#2E653D">
 
+  <!-- Apply saved dark mode before the page renders (see ThemeLever.tsx) -->
+  <script>
+    try {
+      if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+    } catch (e) { }
+  </script>
+
   <link rel="canonical" href="https://mariathurn.de/">
 
   <meta property="og:type" content="website">

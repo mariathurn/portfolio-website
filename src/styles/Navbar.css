@@ -25,18 +25,62 @@
 }
 
 
-/* Logo */
+/* Logo: dark-mode lever + name */
+
+.navbar-brand {
+  --logo-height: 35px;
+
+  display: flex;
+  align-items: center;
+  gap: calc(var(--logo-height) * 0.3);
+  flex-shrink: 0;
+}
 
 .navbar-logo {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
 }
 
 .navbar-logo img {
   display: block;
-  height: 35px;
+  height: var(--logo-height);
   width: auto;
+}
+
+.theme-lever {
+  display: block;
+  height: var(--logo-height);
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.theme-lever svg {
+  display: block;
+  height: 100%;
+  width: auto;
+  fill: currentColor;
+  overflow: visible;
+}
+
+/* Handle tilts left in light mode and flips to the right in dark mode */
+.theme-lever-handle {
+  transform: rotate(-45deg);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-lever.is-dark .theme-lever-handle {
+  transform: rotate(45deg);
+}
+
+.theme-lever:hover .theme-lever-handle {
+  transform: rotate(-35deg);
+}
+
+.theme-lever.is-dark:hover .theme-lever-handle {
+  transform: rotate(35deg);
 }
 
 
@@ -124,17 +168,10 @@
     display: block;
   }
 
-  .navbar-logo {
-    display: flex;
+  .navbar-brand {
+    --logo-height: 28px;
+
     flex-shrink: 10;
     margin-right: auto;
-    align-items: center;
-  }
-
-  .navbar-logo img {
-    display: block;
-    height: 28px;
-    width: auto;
-
   }
 }

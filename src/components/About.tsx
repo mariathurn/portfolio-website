@@ -66,7 +66,7 @@ function About() {
           <ul className="about-facts" aria-label="Quick facts">
             <li><span aria-hidden="true">📍</span> Copenhagen</li>
             <li><span aria-hidden="true">🎓</span> MSc IT &amp; Cognition</li>
-            <li><span aria-hidden="true">🎨</span> BA Graphic Design</li>
+            <li><span aria-hidden="true">🎨</span> BA Graphic Design</li>            https://www.artstation.com/mariathurn
           </ul>
 
           <a className="button button-primary cv-button" href={cv} target="_blank" rel="noopener noreferrer">

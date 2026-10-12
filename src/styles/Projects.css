@@ -32,7 +32,7 @@
     aspect-ratio: 16 / 10;
     object-fit: cover;
     border-radius: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-media-border);
     background-color: #1f2a3c;
     margin-bottom: 20px;
 }
