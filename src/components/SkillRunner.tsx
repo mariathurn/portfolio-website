@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { categories, categoryColor, skills, type Skill } from '../data/skills';
 import { wizardPalette, wizardSprite } from '../data/wizardSprite';
+import { sfx } from '../sound';
 
 // Side-scrolling runner: the pixel wizard runs on its own, tap/Space to jump (twice for a
 // double jump), collect skill bubbles and jump over bugs. Missed bubbles come back later;
@@ -66,6 +67,15 @@ const buildLayout = (narrow: boolean): Layout => {
     return { W, H, ground: H - 44, speed: narrow ? 3.4 : 4.2 };
 };
 
+const SOUND_KEY = 'runner-sound';
+const soundSaved = () => {
+    try {
+        return localStorage.getItem(SOUND_KEY) !== 'off';
+    } catch {
+        return true;
+    }
+};
+
 const shuffle = <T,>(items: T[]) => {
     const copy = [...items];
     for (let i = copy.length - 1; i > 0; i--) {
@@ -127,12 +137,33 @@ function SkillRunner({ collected, onCollect, onRestart }: {
         popups: [],
     });
     const onCollectRef = useRef(onCollect);
+    const [soundOn, setSoundOn] = useState(soundSaved);
+    const soundRef = useRef(soundOn);
+    const play = (effect: keyof typeof sfx) => {
+        if (soundRef.current) sfx[effect]();
+    };
+    const playRef = useRef(play);
+
+    useEffect(() => {
+        soundRef.current = soundOn;
+        try {
+            localStorage.setItem(SOUND_KEY, soundOn ? 'on' : 'off');
+        } catch {
+            // Storage blocked – the setting just isn't remembered
+        }
+    }, [soundOn]);
+
+    useEffect(() => {
+        playRef.current = play;
+    });
 
     useEffect(() => {
         onCollectRef.current = onCollect;
     }, [onCollect]);
 
+    // Fanfare when the last bubble is collected while playing (not for "Fill all bars")
     useEffect(() => {
+        if (status === 'won' && game.current.status === 'playing') playRef.current('win');
         game.current.status = status;
     }, [status]);
 
@@ -250,6 +281,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                     g.stumble = STUMBLE_FRAMES;
                     g.blink = BLINK_FRAMES;
                     g.popups.push({ text: 'Bug! 🐛', color: '#e5534b', x: playerX + SPRITE_W / 2, y: top - 10, life: 1 });
+                    playRef.current('hit');
                 }
             }
 
@@ -260,6 +292,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                     const label = categories.find((c) => c.id === b.skill.category)?.label ?? '';
                     g.popups.push({ text: `+1 ${label}`, color: categoryColor(b.skill.category), x: b.x + b.w / 2, y: b.y, life: 1 });
                     onCollectRef.current(b.skill);
+                    playRef.current('collect');
                     return false;
                 }
                 // Missed: back into the queue for later
@@ -410,12 +443,15 @@ function SkillRunner({ collected, onCollect, onRestart }: {
     const jump = () => {
         const p = game.current.player;
         if (p.jumpsLeft <= 0) return;
+        play(p.jumpsLeft === 2 ? 'jump' : 'doubleJump');
         p.vy = JUMP_V;
         p.jumpsLeft -= 1;
     };
 
     const start = () => {
         if (status === 'won') onRestart();
+        sfx.unlock();
+        play('start');
         setPlayStatus('playing');
         canvasRef.current?.focus();
     };
@@ -450,6 +486,20 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                     <p>Tap or press Space to jump – twice for a double jump.<br />Collect the bubbles, jump over the bugs 🐛</p>
                 </div>
             )}
+
+            <button
+                type="button"
+                className="runner-sound"
+                onClick={() => {
+                    sfx.unlock();
+                    setSoundOn((on) => !on);
+                }}
+                aria-pressed={soundOn}
+                aria-label={soundOn ? 'Mute sound effects' : 'Turn on sound effects'}
+                title={soundOn ? 'Sound on' : 'Sound off'}
+            >
+                {soundOn ? '🔊' : '🔇'}
+            </button>
 
             {status === 'won' && (
                 <div className="runner-overlay">
