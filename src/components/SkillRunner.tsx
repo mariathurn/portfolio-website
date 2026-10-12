@@ -63,7 +63,8 @@ const BLINK_FRAMES = 90;
 
 const buildLayout = (narrow: boolean): Layout => {
     const W = narrow ? 480 : 900;
-    const H = narrow ? 320 : 300;
+    // Extra height on top leaves room for the HUD bars
+    const H = narrow ? 480 : 440;
     return { W, H, ground: H - 44, speed: narrow ? 3.4 : 4.2 };
 };
 
@@ -465,6 +466,53 @@ function SkillRunner({ collected, onCollect, onRestart }: {
 
     return (
         <div className="runner" ref={wrapRef}>
+            {/* HUD: one bar per category, filled by collected skills */}
+            <div className="runner-hud">
+                <ul className="runner-bars" aria-label="Skill levels">
+                    {categories.map((category) => {
+                        const total = skills.filter((s) => s.category === category.id).length;
+                        const count = skills.filter((s) => s.category === category.id && collected.includes(s.name)).length;
+                        return (
+                            <li key={category.id}>
+                                <div className="runner-bar-label">
+                                    <span>{category.label}</span>
+                                    <span>{count === total ? 'MAX' : `${count}/${total}`}</span>
+                                </div>
+                                <div className="runner-bar-track" role="progressbar" aria-label={category.label}
+                                    aria-valuemin={0} aria-valuemax={total} aria-valuenow={count}>
+                                    <div className="runner-bar-fill"
+                                        style={{ width: `${(count / total) * 100}%`, backgroundColor: category.color }} />
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+
+                <button
+                    type="button"
+                    className="runner-sound"
+                    onClick={() => {
+                        sfx.unlock();
+                        setSoundOn((on) => !on);
+                    }}
+                    aria-pressed={soundOn}
+                    aria-label={soundOn ? 'Mute sound effects' : 'Turn on sound effects'}
+                    title={soundOn ? 'Sound on' : 'Sound off'}
+                >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" />
+                        {soundOn ? (
+                            <>
+                                <path d="M15.5 9.2a4 4 0 0 1 0 5.6" />
+                                <path d="M18.2 6.6a7.6 7.6 0 0 1 0 10.8" />
+                            </>
+                        ) : (
+                            <path d="M16 9.5l5 5M21 9.5l-5 5" />
+                        )}
+                    </svg>
+                </button>
+            </div>
+
             <canvas
                 ref={canvasRef}
                 className="runner-canvas"
@@ -486,20 +534,6 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                     <p>Tap or press Space to jump – twice for a double jump.<br />Collect the bubbles, jump over the bugs 🐛</p>
                 </div>
             )}
-
-            <button
-                type="button"
-                className="runner-sound"
-                onClick={() => {
-                    sfx.unlock();
-                    setSoundOn((on) => !on);
-                }}
-                aria-pressed={soundOn}
-                aria-label={soundOn ? 'Mute sound effects' : 'Turn on sound effects'}
-                title={soundOn ? 'Sound on' : 'Sound off'}
-            >
-                {soundOn ? '🔊' : '🔇'}
-            </button>
 
             {status === 'won' && (
                 <div className="runner-overlay">

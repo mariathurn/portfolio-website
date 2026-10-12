@@ -27,7 +27,7 @@ export const skills: Skill[] = [
     { name: 'UI Design', category: 'design', blurb: 'Clean, clear interfaces with an eye for detail.' },
     { name: 'UX', category: 'design', blurb: 'Designing for how people actually use things.' },
     { name: 'Prototyping', category: 'design', blurb: 'Clickable ideas before codeable ones.' },
-    { name: 'Graphic Design', category: 'design', blurb: 'My Bachelor’s: type, colour and composition.' },
+    { name: 'Graphic Design', category: 'design', blurb: 'My Bachelor’s: typography, colour and composition.' },
     { name: 'Adobe CC', category: 'design', blurb: 'Photoshop, Illustrator & InDesign.' },
 
     { name: 'Python', category: 'software', blurb: 'Data, machine learning and quick scripts.' },

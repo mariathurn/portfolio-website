@@ -4,17 +4,13 @@ import SkillRunner from './SkillRunner';
 import { categories, skills, type Skill } from '../data/skills';
 
 function Skills() {
-    // Names of collected skills, newest first
+    // Names of skills collected in the game, newest first
     const [collected, setCollected] = useState<string[]>([]);
 
     const collect = useCallback((skill: Skill) => {
         setCollected((prev) => (prev.includes(skill.name) ? prev : [skill.name, ...prev]));
     }, []);
     const restart = useCallback(() => setCollected([]), []);
-    const fillAll = () => setCollected(skills.map((skill) => skill.name));
-
-    const latest = skills.find((skill) => skill.name === collected[0]);
-    const allCollected = collected.length === skills.length;
 
     return (
         <section id='skills' className='skills'>
@@ -22,47 +18,31 @@ function Skills() {
 
             <SkillRunner collected={collected} onCollect={collect} onRestart={restart} />
 
-            <div className="skill-stats">
-                <ul className="skill-bars" aria-label="Skill levels">
-                    {categories.map((category) => {
-                        const total = skills.filter((s) => s.category === category.id).length;
-                        const count = skills.filter((s) => s.category === category.id && collected.includes(s.name)).length;
-                        return (
-                            <li key={category.id} className={count === total ? 'is-full' : ''}>
-                                <div className="skill-bar-label">
-                                    <span>{category.label}</span>
-                                    <span>{count === total ? 'MAX' : `${count} / ${total}`}</span>
-                                </div>
-                                <div className="skill-bar-track" role="progressbar" aria-label={category.label}
-                                    aria-valuemin={0} aria-valuemax={total} aria-valuenow={count}>
-                                    <div className="skill-bar-fill"
-                                        style={{ width: `${(count / total) * 100}%`, backgroundColor: category.color }} />
-                                </div>
-                            </li>
-                        );
-                    })}
-                </ul>
-
-                <div className="skill-latest" aria-live="polite">
-                    {latest ? (
-                        <p><strong>{latest.name}</strong> – {latest.blurb}</p>
-                    ) : (
-                        <p className="skill-latest-empty">Collect the bubbles to fill up the bars.</p>
-                    )}
-                    {!allCollected && (
-                        <button type="button" className="skill-skip" onClick={fillAll}>
-                            No time to play? Fill all bars
-                        </button>
-                    )}
-                </div>
-            </div>
-
-            {/* Full list for screen readers and search engines – the game itself is a canvas */}
-            <ul className="visually-hidden">
-                {skills.map((skill) => (
-                    <li key={skill.name}>{skill.name}: {skill.blurb}</li>
+            {/* Quick overview for anyone who doesn't want to play */}
+            <div className="skill-overview">
+                {categories.map((category) => (
+                    <table key={category.id} className="skill-table">
+                        <caption>
+                            <span className="skill-swatch" style={{ backgroundColor: category.color }} aria-hidden="true" />
+                            {category.label}
+                        </caption>
+                        <tbody>
+                            {skills.filter((skill) => skill.category === category.id).map((skill) => {
+                                const isCollected = collected.includes(skill.name);
+                                return (
+                                    <tr key={skill.name} className={isCollected ? 'is-collected' : ''}>
+                                        <th scope="row">
+                                            {skill.name}
+                                            {isCollected && <span className="skill-check" aria-label="collected"> ✓</span>}
+                                        </th>
+                                        <td>{skill.blurb}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
                 ))}
-            </ul>
+            </div>
         </section>
     );
 }
