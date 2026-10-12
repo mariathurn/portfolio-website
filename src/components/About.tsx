@@ -65,9 +65,7 @@ function About() {
         <article className='text-block'>
           <h1 className="section-title">Hej, I'm Maria!</h1>
           <p className="about-lead">
-            {/* One line per sentence – the font shrinks to fit (see .about-lead in About.css) */}
-            <span>I'm a graphic designer who learned how to code.</span>{' '}
-            <span>Now I build whatever comes to my mind.</span>
+            I'm a graphic designer who learned to code. Now I build whatever comes to my mind.
           </p>
 
           <ul className="about-facts" aria-label="Quick facts">
