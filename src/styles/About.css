@@ -169,8 +169,10 @@
     font-size: 1.4rem;
     font-weight: 500;
     line-height: 1.65;
+    text-align: center;
+
     /* A touch lighter than the section – follows dark mode automatically */
-    --bubble-bg: color-mix(in srgb, var(--color-green) 88%, white);
+    --bubble-bg: color-mix(in srgb, var(--color-green) 88%, rgb(64, 64, 64));
 }
 
 .speech-bubble {
