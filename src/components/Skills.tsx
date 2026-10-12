@@ -1,68 +1,60 @@
 import { useCallback, useState } from 'react';
 import '../styles/Skills.css';
-import SkillBreakout from './SkillBreakout';
-import { categories, categoryColor, skills, type Skill } from '../data/skills';
+import SkillRunner from './SkillRunner';
+import { categories, skills, type Skill } from '../data/skills';
 
 function Skills() {
-    // Names of unlocked skills, newest first
+    // Names of collected skills, newest first
     const [collected, setCollected] = useState<string[]>([]);
 
     const collect = useCallback((skill: Skill) => {
         setCollected((prev) => (prev.includes(skill.name) ? prev : [skill.name, ...prev]));
     }, []);
-
-    const unlockAll = () => setCollected(skills.map((skill) => skill.name));
     const restart = useCallback(() => setCollected([]), []);
+    const fillAll = () => setCollected(skills.map((skill) => skill.name));
 
-    const unlocked = collected
-        .map((name) => skills.find((skill) => skill.name === name))
-        .filter((skill): skill is Skill => Boolean(skill));
-    const allUnlocked = collected.length === skills.length;
+    const latest = skills.find((skill) => skill.name === collected[0]);
+    const allCollected = collected.length === skills.length;
 
     return (
         <section id='skills' className='skills'>
             <h2 className="section-title">Skills</h2>
 
-            <ul className="skill-legend" aria-label="Skill categories">
-                {categories.map((category) => (
-                    <li key={category.id}>
-                        <span className="skill-swatch" style={{ backgroundColor: category.color }} aria-hidden="true" />
-                        {category.label}
-                    </li>
-                ))}
-            </ul>
+            <SkillRunner collected={collected} onCollect={collect} onRestart={restart} />
 
-            <div className="skills-game">
-                <SkillBreakout collected={collected} onCollect={collect} onRestart={restart} />
+            <div className="skill-stats">
+                <ul className="skill-bars" aria-label="Skill levels">
+                    {categories.map((category) => {
+                        const total = skills.filter((s) => s.category === category.id).length;
+                        const count = skills.filter((s) => s.category === category.id && collected.includes(s.name)).length;
+                        return (
+                            <li key={category.id} className={count === total ? 'is-full' : ''}>
+                                <div className="skill-bar-label">
+                                    <span>{category.label}</span>
+                                    <span>{count === total ? 'MAX' : `${count} / ${total}`}</span>
+                                </div>
+                                <div className="skill-bar-track" role="progressbar" aria-label={category.label}
+                                    aria-valuemin={0} aria-valuemax={total} aria-valuenow={count}>
+                                    <div className="skill-bar-fill"
+                                        style={{ width: `${(count / total) * 100}%`, backgroundColor: category.color }} />
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
 
-                <aside className="skill-inventory" aria-label="Unlocked skills">
-                    <div className="skill-inventory-header">
-                        <h3>Unlocked</h3>
-                        <span className="skill-count">{collected.length} / {skills.length}</span>
-                    </div>
-
-                    {unlocked.length === 0 ? (
-                        <p className="skill-inventory-empty">Catch falling skills with the paddle – they’ll show up here.</p>
+                <div className="skill-latest" aria-live="polite">
+                    {latest ? (
+                        <p><strong>{latest.name}</strong> – {latest.blurb}</p>
                     ) : (
-                        <ul className="skill-inventory-list" aria-live="polite">
-                            {unlocked.map((skill) => (
-                                <li key={skill.name}>
-                                    <span className="skill-swatch" style={{ backgroundColor: categoryColor(skill.category) }} aria-hidden="true" />
-                                    <div>
-                                        <strong>{skill.name}</strong>
-                                        <p>{skill.blurb}</p>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                        <p className="skill-latest-empty">Collect the bubbles to fill up the bars.</p>
                     )}
-
-                    {!allUnlocked && (
-                        <button type="button" className="skill-skip" onClick={unlockAll}>
-                            No time to play? Unlock all skills
+                    {!allCollected && (
+                        <button type="button" className="skill-skip" onClick={fillAll}>
+                            No time to play? Fill all bars
                         </button>
                     )}
-                </aside>
+                </div>
             </div>
 
             {/* Full list for screen readers and search engines – the game itself is a canvas */}
