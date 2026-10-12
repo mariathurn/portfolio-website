@@ -1,83 +1,64 @@
 .contact {
-    min-height: 100vh;
-    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-color: #AB5135;
-    padding: 20px 5%;
+    text-align: center;
+    background-color: var(--color-rust);
+    color: var(--color-white);
+    padding-bottom: 40px;
 }
 
-.contact h1 {
-    font-size: 4rem;
-    font-family: 'Rubik Scribble', sans-serif;
-    text-transform: uppercase;
-    color: white;
-    font-weight: 100;
-    display: flex;
-    justify-content: center;
-    padding-bottom: 20px;
-
+.contact .section-title {
+    margin-bottom: 16px;
 }
 
-.contact h2 {
+.contact-tagline {
+    font-family: var(--font-scribble);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    line-height: 1.1;
     text-transform: uppercase;
-    display: flex;
-    justify-content: center;
-    color: white;
-    margin: 30px;
-    font-family: 'Rubik One', sans-serif;
-    font-size: 3rem;
-    font-weight: lighter;
+}
+
+.contact-text {
+    margin-top: 16px;
+    font-size: 1.15rem;
 }
 
 .contact-ways {
-    text-transform: uppercase;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
-    margin: 20px;
-    color: white;
-    font-family: 'Rubik One', sans-serif;
-    font-weight: lighter;
-    font-size: 1.5rem;
-
+    gap: 16px;
+    margin-top: 32px;
 }
 
-footer {
-    padding-top: 30px;
-    display: flex;
-    justify-content: center;
+.contact-ways .button-primary {
+    color: var(--color-rust);
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
+.contact-footer {
+    margin-top: 96px;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+.contact-footer a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.contact-footer a:hover {
+    color: var(--color-yellow);
 }
 
 @media (max-width: 750px) {
-
-    .contact h2 {
-        text-align: center;
-    }
-
     .contact-ways {
-        display: flex;
-        gap: 15px;
-        padding: 20px;
         flex-direction: column;
-        text-align: center;
-
+        width: 100%;
+        max-width: 320px;
     }
 
-    .specific-project {
-        flex-basis: 100%;
+    .contact-footer {
+        margin-top: 64px;
     }
-
-    .contact {
-        min-height: 100vh;
-        padding-bottom: 50px;
-    }
-
 }

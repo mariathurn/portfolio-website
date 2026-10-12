@@ -1,93 +1,56 @@
 .projects {
-    min-height: 100vh;
-    padding: 20px 5%;
-    background-color: #9C3435;
-}
-
-.projects h1 {
-    font-size: 4rem;
-    font-family: 'Rubik Scribble', sans-serif;
-    text-transform: uppercase;
-    color: white;
-    font-weight: 100;
-
+    background-color: var(--color-red);
 }
 
 .projects-block {
-    display: flex;
-    gap: 40px;
-    padding: 30px;
-    margin-top: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    gap: 32px;
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
 .specific-project {
-    min-width: 0;
-    background-color: white;
-    padding: 20px;
-    border-radius: 15px;
-    flex: 0 0 calc((100% - 40px) / 2);
-
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.specific-project>img {
+.specific-project:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.specific-project .tag-list {
+    margin-bottom: 16px;
+}
+
+.project-media {
     display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    margin: 15px 0;
-    width: 100%;
-    height: auto;
+    background-color: #1f2a3c;
+    margin-bottom: 20px;
 }
 
-
-.projects h2 {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    text-transform: uppercase;
+.project-status {
+    margin-top: auto;
     font-weight: 600;
-
+    color: var(--color-text-muted);
 }
 
-.projects p {
-    font-size: medium;
-    margin-bottom: 15px;
+.project-links {
+    margin-top: auto;
+    padding-top: 8px;
 }
-
-.link-game {
-    text-decoration-line: underline;
-    text-decoration-thickness: 2px;
-}
-
-.project-video {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 15px 0;
-    border-radius: 4px;
-}
-
-a:hover {
-    color: orange;
-}
-
 
 @media (max-width: 750px) {
     .projects-block {
-        display: flex;
-        gap: 15px;
-        padding: 20px;
-        margin-top: 15px;
-        flex-direction: column;
-
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
-
-    .specific-project {
-        flex-basis: 100%;
-    }
-
-    .projects {
-        padding: 10px 5%;
-    }
-
 }

@@ -5,12 +5,12 @@ import mariaLogo from '../assets/logo.png';
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLUListElement | null>(null);
-  const hamburgerRef = useRef<HTMLDivElement | null>(null);
+  const hamburgerRef = useRef<HTMLButtonElement | null>(null);
 
   const toggleMenu = () => setIsOpen(prev => !prev);
   const closeMenu = () => setIsOpen(false);
 
-  const [navColor, setNavColor] = useState("#2E653D");
+  const [navColor, setNavColor] = useState("var(--color-green)");
 
   useEffect(() => {
     const sections = document.querySelectorAll<HTMLElement>("main section");
@@ -24,7 +24,9 @@ function Navbar() {
         });
       },
       {
-        threshold: 0.5,
+        // Trigger when a section crosses the vertical middle of the viewport,
+        // so sections taller than the screen are detected as well.
+        rootMargin: "-50% 0px -50% 0px",
       }
     );
 
@@ -55,6 +57,7 @@ function Navbar() {
 
   return (
     <nav className="navbar"
+      aria-label="Main navigation"
       style={{ backgroundColor: navColor }}>
       <div className="navbar-container">
 
@@ -73,16 +76,21 @@ function Navbar() {
           <li><a href="#contact">Contact</a></li>
         </ul>
 
-        <div
+        <button
+          type="button"
           className="navbar-hamburger"
           onClick={toggleMenu}
           ref={hamburgerRef}
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
         >
           <span></span>
           <span></span>
           <span></span>
-        </div>
+        </button>
         <ul
+          id="mobile-menu"
           className={`navbar-mobile-menu ${isOpen ? 'active' : ''}`}
           style={{ backgroundColor: navColor }}
           ref={menuRef}

@@ -5,11 +5,12 @@
 
   height: var(--navbar-height);
   width: 100%;
-  background-color: #2E653D;
+  background-color: var(--color-green);
   color: var(--color-white);
 
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 
   transition: background-color 0.4s ease;
@@ -18,6 +19,7 @@
 .navbar-container {
   display: flex;
   align-items: center;
+  gap: 16px;
   height: 100%;
   padding: 0 5%;
 }
@@ -43,9 +45,8 @@
 .navbar-menu {
   display: flex;
   margin-left: auto;
-  padding-top: 10px;
   list-style: none;
-  gap: 16px;
+  gap: 32px;
 }
 
 .navbar-menu a {
@@ -65,10 +66,15 @@
   display: none;
   flex-direction: column;
   gap: 5px;
+  padding: 8px;
+  background: none;
+  border: none;
+  color: inherit;
   cursor: pointer;
 }
 
 .navbar-hamburger span {
+  display: block;
   width: 30px;
   height: 3px;
   background-color: currentColor;
@@ -84,7 +90,7 @@
   top: var(--navbar-height);
   left: 0;
   width: 100%;
-  background-color: #2E653D;
+  background-color: var(--color-green);
   list-style: none;
 }
 
@@ -112,7 +118,6 @@
   .navbar-hamburger {
     display: flex;
     margin-left: auto;
-    padding-right: 1%;
   }
 
   .navbar-mobile-menu.active {
@@ -128,7 +133,7 @@
 
   .navbar-logo img {
     display: block;
-    height: 32px;
+    height: 28px;
     width: auto;
 
   }

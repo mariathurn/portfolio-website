@@ -1,25 +1,37 @@
 import '../styles/About.css';
 import welcomeBanner from '../assets/welcome-banner.png'
 import profilePicture from '../assets/profile-picture.jpeg'
+import cv from '../assets/CV.pdf'
 
 function About() {
   return (
     <section id="about" className="about">
-      <img className="welcome-banner" src={welcomeBanner} alt="Welcome Banner" />
-      <div className='about-block'>
-        <img className="profile-picture" src={profilePicture} alt="Profile Picture" />
-        <article className='text-block'>
-          <h1>About</h1>
-          <p>
-            Newly graduated Front-End Developer looking for a company that wants a passionate and dedicated developer. <br /> <br />
-            While studying at Copenhagen University I discovered a passion for Frontend Development. In this area of programming I can combine my design talent with my enthusiasm for technical challenges.
-            <br /><br />
-            I’m currently looking for my first frontend developer role,
-            where I can grow as a developer and contribute to meaningful projects.
-          </p><br />
-          <a className="cv" href="src/assets/CV.pdf" target="_blank">Click here for my CV.</a>
-        </article>
+      <header className="hero">
+        <img className="welcome-banner" src={welcomeBanner} alt="" />
+        <h1 className="hero-name">Maria Thurn</h1>
+        <p className="hero-role">Frontend Developer · UI Designer · Copenhagen</p>
+        <div className="hero-actions">
+          <a className="button button-primary" href="#projects">View projects</a>
+          <a className="button button-secondary" href={cv} target="_blank" rel="noopener noreferrer">
+            Download CV (PDF)
+          </a>
+        </div>
+      </header>
 
+      <div className='about-block'>
+        <img className="profile-picture" src={profilePicture} alt="Portrait of Maria Thurn" />
+        <article className='text-block'>
+          <h2 className="section-title">About</h2>
+          <p>
+            I'm a frontend developer with a background in graphic design and a Master's degree in IT &amp; Cognition
+            from the University of Copenhagen. I build interfaces that look good and work well – combining an eye
+            for design with real enthusiasm for technical challenges.
+          </p>
+          <p>
+            I recently graduated and I'm looking for my first frontend developer role, where I can keep growing
+            as a developer and contribute to meaningful products.
+          </p>
+        </article>
       </div>
     </section>
   );
