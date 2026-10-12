@@ -213,7 +213,7 @@
 
 .sheet-inventory li::before {
     content: '◆ ';
-    color: var(--color-red);
+    color: var(--color-purple);
 }
 
 @media (max-width: 900px) {

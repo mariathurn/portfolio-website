@@ -5,7 +5,7 @@
   --color-yellow: #e7df03;
   --color-green: #2E653D;
   --color-blue: #335F7A;
-  --color-red: #9C3435;
+  --color-purple: #6A3E8C;
   --color-rust: #AB5135;
   --color-text: #1f2328;
   --color-text-muted: #57606a;
@@ -30,7 +30,7 @@
 
   --color-green: #173322;
   --color-blue: #172b3b;
-  --color-red: #3b1a1e;
+  --color-purple: #2a1b3a;
   --color-rust: #45271b;
   --color-text: #ebe6f3;
   --color-text-muted: #a9a2b8;
@@ -66,7 +66,7 @@ main {
 }
 
 section {
-  padding: 32px 5% 96px;
+  padding: 20px 5% 96px;
   transition: background-color 0.4s ease;
 }
 
@@ -206,8 +206,8 @@ button:focus-visible {
 }
 
 .button-dark:hover {
-  background-color: var(--color-red);
-  border-color: var(--color-red);
+  background-color: var(--color-purple);
+  border-color: var(--color-purple);
   color: var(--color-white);
 }
 

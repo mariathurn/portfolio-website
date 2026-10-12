@@ -15,7 +15,7 @@ function Navbar() {
   const sectionColors: Record<string, string> = {
     about: 'var(--color-green)',
     skills: 'var(--color-blue)',
-    projects: 'var(--color-red)',
+    projects: 'var(--color-purple)',
     contact: 'var(--color-rust)',
   };
   const [activeSection, setActiveSection] = useState('about');
