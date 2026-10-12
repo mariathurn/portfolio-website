@@ -173,6 +173,14 @@
     padding: 0 2px;
 }
 
+/* Callout for the current status / job search */
+.about-status {
+    padding: 14px 18px;
+    border-left: 4px solid var(--color-yellow);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .text-block em {
     font-style: italic;
 }
