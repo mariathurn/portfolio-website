@@ -166,19 +166,21 @@
     width: fit-content;
     max-width: 100%;
     padding: 20px 28px;
+    font-family: var(--font-mono);
     font-size: 1.4rem;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.65;
     text-align: center;
 
     /* A touch lighter than the section – follows dark mode automatically */
-    --bubble-bg: color-mix(in srgb, var(--color-green) 88%, rgb(64, 64, 64));
+    --bubble-bg: color-mix(in srgb, var(--color-green) 20%, #253535);
 }
 
 .speech-bubble {
     position: relative;
     /* Keeps the shape (z-index -1) behind the text but above the section background */
     isolation: isolate;
+    
 }
 
 .speech-bubble-shape {
@@ -193,9 +195,12 @@
     fill: var(--bubble-bg);
     /* Same border as the profile picture */
     stroke: aliceblue;
-    stroke-width: 3;
+    stroke-width: 2;
     stroke-linejoin: round;
     transition: fill 0.4s ease;
+    stroke-dasharray: 8 6;   /* 10px line, 6px gap */
+
+
 }
 
 .about-facts {

@@ -5,7 +5,7 @@
   --color-yellow: #e7df03;
   --color-green: #2E653D;
   --color-blue: #335F7A;
-  --color-purple: #665e77;
+  --color-purple: #4d4472;
   --color-rust: #d55747;
   --color-text: #1f2328;
   --color-text-muted: #57606a;
@@ -18,6 +18,7 @@
   --font-body: 'Rubik', sans-serif;
   --font-display: 'Rubik One', sans-serif;
   --font-scribble: 'Rubik Scribble', sans-serif;
+  --font-mono: 'PT Mono', monospace;
 
   --radius-card: 16px;
   --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.18);
