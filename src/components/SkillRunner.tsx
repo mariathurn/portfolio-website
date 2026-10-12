@@ -7,7 +7,7 @@ import { sfx } from '../sound';
 // double jump), collect skill bubbles and jump over bugs. Missed bubbles come back later;
 // hitting a bug only makes the wizard stumble – no game over.
 
-type Status = 'idle' | 'playing' | 'won';
+type Status = 'idle' | 'playing' | 'paused' | 'won';
 
 type Bubble = { skill: Skill; x: number; y: number; w: number; phase: number };
 type Popup = { text: string; color: string; x: number; y: number; life: number };
@@ -64,7 +64,7 @@ const BLINK_FRAMES = 90;
 const buildLayout = (narrow: boolean): Layout => {
     const W = narrow ? 480 : 900;
     // Extra height on top leaves room for the HUD bars
-    const H = narrow ? 480 : 440;
+    const H = narrow ? 520 : 440;
     return { W, H, ground: H - 44, speed: narrow ? 3.4 : 4.2 };
 };
 
@@ -226,6 +226,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
         };
 
         const step = (k: number) => {
+            if (g.status === 'paused') return;
             const p = g.player;
             const running = g.status === 'playing';
 
@@ -404,7 +405,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
         const loop = (now: number) => {
             const k = Math.min((now - last) / 16.67, 2);
             last = now;
-            tick += k;
+            if (g.status !== 'paused') tick += k;
             step(k);
             draw();
             frame = requestAnimationFrame(loop);
@@ -457,10 +458,17 @@ function SkillRunner({ collected, onCollect, onRestart }: {
         canvasRef.current?.focus();
     };
 
-    // Tap/Space: start or jump. After winning only the "Run again" button restarts,
+    const togglePause = () => {
+        if (status === 'playing') setPlayStatus('paused');
+        else if (status === 'paused') setPlayStatus('playing');
+        canvasRef.current?.focus();
+    };
+
+    // Tap/Space: start, jump or resume. After winning only the "Run again" button restarts,
     // so a last jump doesn't skip the win screen.
     const action = () => {
         if (status === 'playing') jump();
+        else if (status === 'paused') togglePause();
         else if (status === 'idle') start();
     };
 
@@ -488,29 +496,48 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                     })}
                 </ul>
 
-                <button
-                    type="button"
-                    className="runner-sound"
-                    onClick={() => {
-                        sfx.unlock();
-                        setSoundOn((on) => !on);
-                    }}
-                    aria-pressed={soundOn}
-                    aria-label={soundOn ? 'Mute sound effects' : 'Turn on sound effects'}
-                    title={soundOn ? 'Sound on' : 'Sound off'}
-                >
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" />
-                        {soundOn ? (
-                            <>
-                                <path d="M15.5 9.2a4 4 0 0 1 0 5.6" />
-                                <path d="M18.2 6.6a7.6 7.6 0 0 1 0 10.8" />
-                            </>
-                        ) : (
-                            <path d="M16 9.5l5 5M21 9.5l-5 5" />
-                        )}
-                    </svg>
-                </button>
+                <div className="runner-controls">
+                    <button
+                        type="button"
+                        className="runner-control"
+                        onClick={() => {
+                            sfx.unlock();
+                            setSoundOn((on) => !on);
+                        }}
+                        aria-pressed={soundOn}
+                        aria-label={soundOn ? 'Mute sound effects' : 'Turn on sound effects'}
+                        title={soundOn ? 'Sound on' : 'Sound off'}
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" />
+                            {soundOn ? (
+                                <>
+                                    <path d="M15.5 9.2a4 4 0 0 1 0 5.6" />
+                                    <path d="M18.2 6.6a7.6 7.6 0 0 1 0 10.8" />
+                                </>
+                            ) : (
+                                <path d="M16 9.5l5 5M21 9.5l-5 5" />
+                            )}
+                        </svg>
+                    </button>
+
+                    {(status === 'playing' || status === 'paused') && (
+                        <button
+                            type="button"
+                            className="runner-control"
+                            onClick={togglePause}
+                            aria-pressed={status === 'paused'}
+                            aria-label={status === 'paused' ? 'Resume game' : 'Pause game'}
+                            title={status === 'paused' ? 'Resume' : 'Pause'}
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                {status === 'paused'
+                                    ? <path d="M8 5.5v13l10-6.5z" />
+                                    : <path d="M9 6v12M15 6v12" />}
+                            </svg>
+                        </button>
+                    )}
+                </div>
             </div>
 
             <canvas
@@ -524,6 +551,8 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                     if ([' ', 'ArrowUp', 'w', 'Enter'].includes(event.key)) {
                         event.preventDefault();
                         if (!event.repeat) action();
+                    } else if (event.key === 'p' || event.key === 'Escape') {
+                        togglePause();
                     }
                 }}
             />
@@ -532,6 +561,13 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                 <div className="runner-overlay">
                     <button type="button" className="button button-primary" onClick={start}>▶ Start running</button>
                     <p>Tap or press Space to jump – twice for a double jump.<br />Collect the bubbles, jump over the bugs 🐛</p>
+                </div>
+            )}
+
+            {status === 'paused' && (
+                <div className="runner-overlay">
+                    <p className="runner-win">Paused</p>
+                    <button type="button" className="button button-primary" onClick={togglePause}>▶ Resume</button>
                 </div>
             )}
 

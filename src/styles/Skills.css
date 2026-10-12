@@ -114,7 +114,14 @@
     transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.runner-sound {
+/* Sound + pause: side by side on desktop, stacked on mobile */
+.runner-controls {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.runner-control {
     flex-shrink: 0;
     display: grid;
     place-items: center;
@@ -129,7 +136,7 @@
     pointer-events: auto;
 }
 
-.runner-sound svg {
+.runner-control svg {
     width: 22px;
     height: 22px;
     fill: none;
@@ -139,11 +146,11 @@
     stroke-linejoin: round;
 }
 
-.runner-sound:hover {
+.runner-control:hover {
     background-color: rgba(0, 0, 0, 0.55);
 }
 
-.runner-sound:focus-visible {
+.runner-control:focus-visible {
     outline: 3px solid var(--color-yellow);
     outline-offset: 2px;
 }
@@ -236,7 +243,11 @@
         font-size: 0.65rem;
     }
 
-    .runner-sound {
+    .runner-controls {
+        flex-direction: column;
+    }
+
+    .runner-control {
         width: 34px;
         height: 34px;
     }
