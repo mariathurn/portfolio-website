@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 // Comic-style speech bubble: the rounded box and its tail are ONE svg path with one stroke,
 // so the outline has no seams. The path is redrawn whenever the bubble changes size.
-// The tail points left (at the photo) on wide screens and up on narrow ones.
+// The tail points left (at the photo) on wide screens and straight up from the middle on narrow ones.
 
 const RADIUS = 34;
 const TAIL = 20; // how far the tail sticks out
@@ -16,14 +16,15 @@ const bubblePath = (w: number, h: number, tailUp: boolean) => {
     const L = i, T = i, R = w - i, B = h - i;
 
     if (tailUp) {
-        // Tail on the top edge, sweeping up and slightly left
-        const a = L + r + 8;
-        const b = a + 26;
+        // Tail in the middle of the top edge, pointing straight up at the photo
+        const mid = w / 2;
+        const a = mid - 13;
+        const b = mid + 13;
         return [
             `M ${L + r} ${T}`,
             `H ${a}`,
-            `Q ${a - 2} ${T - TAIL * 0.5} ${a - 8} ${T - TAIL}`,
-            `Q ${a + 8} ${T - TAIL * 0.6} ${b} ${T}`,
+            `Q ${mid - 3} ${T - TAIL * 0.45} ${mid} ${T - TAIL}`,
+            `Q ${mid + 3} ${T - TAIL * 0.45} ${b} ${T}`,
             `H ${R - r} A ${r} ${r} 0 0 1 ${R} ${T + r}`,
             `V ${B - r} A ${r} ${r} 0 0 1 ${R - r} ${B}`,
             `H ${L + r} A ${r} ${r} 0 0 1 ${L} ${B - r}`,
