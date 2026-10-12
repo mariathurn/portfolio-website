@@ -139,7 +139,7 @@
 
 .profile-picture {
     display: block;
-    width: 280px;
+    width: 260px;
     max-width: 100%;
     height: auto;
     border: 3px solid aliceblue;
@@ -158,6 +158,40 @@
 
 .text-block p+p {
     margin-top: 16px;
+}
+
+.about-lead {
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+/* Yellow highlighter stroke behind keywords */
+.text-block mark {
+    color: inherit;
+    background: linear-gradient(transparent 60%, rgba(231, 223, 3, 0.55) 60%);
+    padding: 0 2px;
+}
+
+.text-block em {
+    font-style: italic;
+}
+
+.about-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+    list-style: none;
+}
+
+.about-facts li {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
 .cv-button {
@@ -184,5 +218,9 @@
 
     .text-block {
         font-size: 1rem;
+    }
+
+    .about-lead {
+        font-size: 1.2rem;
     }
 }

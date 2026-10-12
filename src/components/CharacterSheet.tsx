@@ -3,10 +3,10 @@ import '../styles/CharacterSheet.css';
 // Edit freely – everything shown on the sheet lives in these lists.
 const details = [
     { label: 'Class', value: 'Frontend Developer' },
-    { label: 'Subclass', value: 'UI Designer' },
-    { label: 'Level', value: '1 – ready for the first quest' },
+    { label: 'Subclass', value: 'Tech Wizard' },
+    { label: 'Level', value: '34' },
     { label: 'Origin', value: 'Bavaria → Copenhagen' },
-    { label: 'Alignment', value: 'Chaotic Creative' },
+    { label: 'Alignment', value: 'Neutral Creative' },
 ];
 
 const abilities = [
@@ -19,7 +19,7 @@ const abilities = [
 ];
 
 const traits = [
-    { label: 'Personality', text: 'Redesigns things nobody asked to be redesigned – see: Schafkopf cards.' },
+    { label: 'Personality', text: 'Can be stuborn, while finishing a goal. Might require frequent focus potions.' },
     { label: 'Ideal', text: 'Interfaces should be both beautiful and easy to use.' },
     { label: 'Bond', text: 'Bringing Bavarian card games to Denmark, one player at a time.' },
     { label: 'Flaw', text: 'Will notice your kerning.' },

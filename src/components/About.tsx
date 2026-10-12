@@ -58,15 +58,21 @@ function About() {
         <img className="profile-picture" src={profilePicture} alt="Portrait of Maria Thurn" />
         <article className='text-block'>
           <h1 className="section-title">Hej, I'm Maria!</h1>
-          <p>
-            Frontend developer with a background in graphic design and a Master's degree in IT &amp; Cognition
-            from the University of Copenhagen. I build interfaces that look good and work well – combining an eye
-            for design with real enthusiasm for technical challenges.
+          <p className="about-lead">
+            I'm a <mark>graphic designer</mark> who learned to <mark>code</mark> – and never stopped.
+            Now I build interfaces that look good <em>and</em> work well.
           </p>
           <p>
-            I recently graduated and I'm looking for my first frontend developer role, where I can keep growing
-            as a developer and contribute to meaningful products.
+            Fresh out of my Master's in IT &amp; Cognition at the University of Copenhagen, I'm looking for my first frontend role.
           </p>
+
+          <ul className="about-facts" aria-label="Quick facts">
+            <li><span aria-hidden="true">📍</span> Copenhagen</li>
+            <li><span aria-hidden="true">🎓</span> MSc IT &amp; Cognition</li>
+            <li><span aria-hidden="true">🎨</span> BA Graphic Design</li>
+            <li><span aria-hidden="true">💼</span> Open to work</li>
+          </ul>
+
           <a className="button button-primary cv-button" href={cv} target="_blank" rel="noopener noreferrer">
             Download CV (PDF)
           </a>
