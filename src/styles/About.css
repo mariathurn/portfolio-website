@@ -131,7 +131,8 @@
 .about-block {
     display: flex;
     gap: 56px;
-    align-items: center;
+    /* Heading starts level with the top of the photo */
+    align-items: flex-start;
     justify-content: center;
     max-width: 1100px;
     margin: 0 auto;
@@ -153,7 +154,9 @@
 }
 
 .text-block .section-title {
-    margin-bottom: 20px;
+    font-size: clamp(2.5rem, 6.5vw, 4.25rem);
+    line-height: 1;
+    margin-bottom: 24px;
 }
 
 .text-block p+p {
@@ -205,6 +208,7 @@
 
     .about-block {
         flex-direction: column;
+        align-items: center;
         gap: 28px;
     }
 

@@ -59,11 +59,8 @@ function About() {
         <article className='text-block'>
           <h1 className="section-title">Hej, I'm Maria!</h1>
           <p className="about-lead">
-            I'm a graphic designer who learned to code – and never stopped.
-            Now I build interfaces that look good <em>and</em> work well.
-          </p>
-          <p className="about-lead about-status">
-            Fresh out of my Master's in IT &amp; Cognition at the University of Copenhagen – ready to bring design and code together.
+            I'm a graphic designer who learned how to code. <br />
+            Now I build whatever comes to my mind.
           </p>
 
           <ul className="about-facts" aria-label="Quick facts">
