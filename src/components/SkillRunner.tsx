@@ -10,7 +10,7 @@ type Status = 'idle' | 'playing' | 'won';
 
 type Bubble = { skill: Skill; x: number; y: number; w: number; phase: number };
 type Popup = { text: string; color: string; x: number; y: number; life: number };
-type Obstacle = { x: number };
+type Obstacle = { x: number; phase: number };
 
 type Layout = { W: number; H: number; ground: number; speed: number };
 
@@ -51,6 +51,12 @@ const BUG_FRAMES = [
 const BUG_PALETTE: Record<string, string> = { K: '#2b2620', R: '#e5534b', W: '#ffffff' };
 const BUG_W = BUG_FRAMES[0][0].length * PIXEL;
 const BUG_H = BUG_FRAMES[0].length * PIXEL;
+const BUG_HOP = 14; // hop height
+// Bugs hop now and then: a short arc, then a pause on the ground
+const bugHop = (o: Obstacle, tick: number) => {
+    const t = ((tick + o.phase) % 70) / 70;
+    return t < 0.3 ? Math.sin((t / 0.3) * Math.PI) * BUG_HOP : 0;
+};
 const STUMBLE_FRAMES = 30;
 const BLINK_FRAMES = 90;
 
@@ -173,7 +179,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
         // A few bubbles already waiting on screen before the game starts
         if (g.bubbles.length === 0 && g.status === 'idle') {
             [0.45, 0.7, 0.95].forEach((at) => spawn(W * at));
-            g.obstacles.push({ x: W * 0.58 });
+            g.obstacles.push({ x: W * 0.58, phase: 0 });
             g.nextSpawn = 260;
             g.nextObstacle = 420;
         }
@@ -225,7 +231,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                     if (blocked) {
                         g.nextObstacle = 60;
                     } else {
-                        g.obstacles.push({ x: W + 20 });
+                        g.obstacles.push({ x: W + 20, phase: Math.random() * 70 });
                         g.nextObstacle = 380 + Math.random() * 320;
                     }
                 }
@@ -239,7 +245,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
 
             if (running && g.blink === 0) {
                 const hitBug = g.obstacles.some((o) =>
-                    o.x + 4 < right && o.x + BUG_W - 4 > left && bottom > ground - BUG_H + 6);
+                    o.x + 4 < right && o.x + BUG_W - 4 > left && bottom > ground - bugHop(o, tick) - BUG_H + 6);
                 if (hitBug) {
                     g.stumble = STUMBLE_FRAMES;
                     g.blink = BLINK_FRAMES;
@@ -324,7 +330,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                         const color = BUG_PALETTE[row[rx]];
                         if (!color) continue;
                         ctx.fillStyle = color;
-                        ctx.fillRect(o.x + rx * PIXEL, ground - BUG_H + ry * PIXEL, PIXEL, PIXEL);
+                        ctx.fillRect(o.x + rx * PIXEL, ground - bugHop(o, tick) - BUG_H + ry * PIXEL, PIXEL, PIXEL);
                     }
                 });
             }

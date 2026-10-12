@@ -50,6 +50,11 @@
     background-color: rgba(0, 0, 0, 0.35);
 }
 
+/* Start / Run again: black text instead of the default green */
+.runner-overlay .button-primary {
+    color: #1f2328;
+}
+
 .runner-win {
     font-family: var(--font-display);
     font-size: 1.5rem;
