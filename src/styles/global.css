@@ -44,6 +44,19 @@ section {
   padding: 32px 5% 96px;
 }
 
+/* Avoid single words hanging alone on the last line */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
 a {
   color: inherit;
   text-decoration: none;
