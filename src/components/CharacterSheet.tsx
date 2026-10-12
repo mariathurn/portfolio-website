@@ -13,7 +13,7 @@ const abilities = [
     { name: 'Design Eye', score: 18, note: 'Spots a misaligned pixel from across the room' },
     { name: 'Code', score: 15, note: 'React, TypeScript & a healthy fear of CSS z-index' },
     { name: 'Curiosity', score: 17, note: 'From graphic design to transformer models' },
-    { name: 'Debugging', score: 14, note: '+2 when armed with console.log' },
+    { name: 'Debugging', score: 14, note: '+2 when armed with AI pet' },
     { name: 'Teamwork', score: 16, note: 'Speaks fluent Designer and Developer' },
     { name: 'Card Games', score: 20, note: 'Natural 20. Will teach you.' },
 ];
@@ -25,13 +25,7 @@ const traits = [
     { label: 'Flaw', text: 'Will notice your kerning.' },
 ];
 
-const inventory = ['Figma', 'VS Code', 'A deck of Bavarian cards', 'An ever-growing Letterboxd watchlist', 'Donuts (for defence)'];
-
-// D&D ability modifier: (score - 10) / 2, rounded down
-const modifier = (score: number) => {
-    const mod = Math.floor((score - 10) / 2);
-    return mod >= 0 ? `+${mod}` : `${mod}`;
-};
+const inventory = ['Figma', 'VS Code', 'A deck of Bavarian cards', 'An ever-growing danish vocabulary', 'Donuts (for defence)'];
 
 function CharacterSheet() {
     return (
@@ -55,8 +49,7 @@ function CharacterSheet() {
                 <div className="sheet-abilities" role="group" aria-label="Ability scores">
                     {abilities.map((ability) => (
                         <div key={ability.name} className="ability">
-                            <span className="sheet-label">{ability.name}</span>
-                            <span className="ability-modifier">{modifier(ability.score)}</span>
+                            <span className="sheet-label ability-name">{ability.name}</span>
                             <span className="ability-score">{ability.score}</span>
                             <p className="ability-note">{ability.note}</p>
                         </div>
