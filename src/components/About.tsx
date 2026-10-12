@@ -68,7 +68,7 @@ function About() {
           <SpeechBubble className="about-lead">
             {/* Terminal look: prompt in front, blinking cursor at the end; &nbsp; keeps the last two words together */}
             <span className="prompt" aria-hidden="true">&gt; </span>
-            I'm a graphic designer who learned to&nbsp;code. <br />Now I build whatever comes to my&nbsp;mind.
+            I'm a graphic designer who learned to&nbsp;code. <br />Now I build whatever I can&nbsp;imagine.
             <span className="cursor" aria-hidden="true" />
           </SpeechBubble>
 
