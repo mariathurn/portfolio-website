@@ -109,8 +109,8 @@
   left: -6px;
   padding: 8px 14px;
   border-radius: 12px;
-  background-color: var(--color-white);
-  color: var(--color-text);
+  background-color: #000;
+  color: var(--color-white);
   box-shadow: var(--shadow-card);
   font-size: 0.85rem;
   font-weight: 500;
