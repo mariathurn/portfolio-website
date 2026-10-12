@@ -63,7 +63,7 @@ function About() {
             Now I build interfaces that look good <em>and</em> work well.
           </p>
           <p className="about-status">
-            Fresh out of my Master's in IT &amp; Cognition at the University of Copenhagen, I'm looking for my first frontend role.
+            Fresh out of my Master's in IT &amp; Cognition at the University of Copenhagen – ready to bring design and code together in a team.
           </p>
 
           <ul className="about-facts" aria-label="Quick facts">
