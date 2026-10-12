@@ -181,11 +181,12 @@
     background-color: rgba(255, 255, 255, 0.08);
 }
 
-.cv-button {
+/* ".button.cv-button" so it overrides .button from global.css, which loads later */
+.button.cv-button {
     margin-top: 24px;
     /* Size of the CV button only (other buttons: .button in global.css) */
-    font-size: 1.15rem;
-    padding: 14px 30px;
+    font-size: 1rem;
+    padding: 9px 20px;
 }
 
 @media (max-width: 750px) {
