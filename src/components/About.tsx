@@ -62,7 +62,7 @@ function About() {
             I'm a graphic designer who learned to code – and never stopped.
             Now I build interfaces that look good <em>and</em> work well.
           </p>
-          <p className="about-status">
+          <p className="about-lead about-status">
             Fresh out of my Master's in IT &amp; Cognition at the University of Copenhagen – ready to bring design and code together.
           </p>
 
