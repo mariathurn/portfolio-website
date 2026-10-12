@@ -16,6 +16,8 @@ function Contact() {
                 <p>© 2026 Maria Thurn</p>
                 <p>
                     Off duty: <a href="https://letterboxd.com/dansktysk/" target="_blank" rel="noopener noreferrer">my film diary on Letterboxd</a>
+                    {' · '}
+                    <a href="https://www.artstation.com/mariathurn" target="_blank" rel="noopener noreferrer">older artwork on ArtStation</a>
                 </p>
             </footer>
         </section>
