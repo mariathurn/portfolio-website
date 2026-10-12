@@ -1,6 +1,6 @@
 .about {
     min-height: calc(100vh - var(--navbar-height));
-    padding-top: 48px;
+    padding-top: 88px;
     background-color: var(--color-green);
     color: var(--color-white);
 }
@@ -203,7 +203,7 @@
 
 @media (max-width: 750px) {
     .about {
-        padding-top: 32px;
+        padding-top: 56px;
     }
 
     .about-block {
