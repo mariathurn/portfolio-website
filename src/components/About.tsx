@@ -65,8 +65,9 @@ function About() {
         <article className='text-block'>
           <h1 className="section-title">Hej, I'm Maria!</h1>
           <p className="about-lead">
-            <span>I'm a graphic designer who learned how to code.</span>{' '}
-            <span>Now I build whatever comes to my mind.</span>
+            {/* &nbsp; keeps the last two words together, so no word ends up alone on a line */}
+            <span>I'm a graphic designer who learned how to&nbsp;code.</span>{' '}
+            <span>Now I build whatever comes to my&nbsp;mind.</span>
           </p>
 
           <ul className="about-facts" aria-label="Quick facts">
