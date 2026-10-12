@@ -28,22 +28,21 @@
 
 .sheet-header {
     display: grid;
-    grid-template-columns: auto minmax(220px, 1fr) 2fr;
+    grid-template-columns: minmax(220px, 1fr) 2fr auto;
+    grid-template-areas: "name details portrait";
     gap: 24px;
     align-items: end;
     padding-bottom: 20px;
     border-bottom: 3px solid var(--sheet-line);
 }
 
-/* Undertale-style frame: black box with a white inner border */
+.sheet-name {
+    grid-area: name;
+}
+
 .sheet-portrait {
-    width: 112px;
-    padding: 10px 10px 0;
-    background-color: #000;
-    border: 3px solid var(--sheet-line);
-    border-radius: 6px;
-    outline: 2px solid var(--color-white);
-    outline-offset: -7px;
+    grid-area: portrait;
+    width: 96px;
 }
 
 .pixel-portrait {
@@ -63,6 +62,7 @@
 }
 
 .sheet-details {
+    grid-area: details;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px 20px;
@@ -195,20 +195,18 @@
         grid-template-columns: 1fr;
     }
 
-    /* Portrait and name side by side, details below */
+    /* Name and wizard side by side, details below */
     .sheet-header {
-        grid-template-columns: auto 1fr;
-    }
-
-    .sheet-details {
-        grid-column: 1 / -1;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "name portrait"
+            "details details";
     }
 }
 
 @media (max-width: 750px) {
     .sheet-portrait {
-        width: 84px;
-        padding: 8px 8px 0;
+        width: 72px;
     }
 
     .sheet-details {

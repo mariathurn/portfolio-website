@@ -32,9 +32,6 @@ function CharacterSheet() {
     return (
         <article className="character-sheet" aria-labelledby="character-sheet-title">
             <header className="sheet-header">
-                <div className="sheet-portrait">
-                    <PixelPortrait />
-                </div>
                 <div className="sheet-name">
                     <span className="sheet-label">Character name</span>
                     <h2 id="character-sheet-title">Maria Thurn</h2>
@@ -47,6 +44,9 @@ function CharacterSheet() {
                         </div>
                     ))}
                 </dl>
+                <div className="sheet-portrait">
+                    <PixelPortrait />
+                </div>
             </header>
 
             <div className="sheet-body">

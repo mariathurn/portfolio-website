@@ -1,41 +1,44 @@
-// Undertale-style pixel portrait. Each character in the grid is one pixel, see `palette`.
+// Undertale-style pixel wizard. Each character in the grid is one pixel, see `palette`.
 const sprite = [
-    '......KKKKKKKK......',
-    '....KKHHHHHHHHKK....',
-    '...KHHLLLHHHHHHHK...',
-    '..KHLLHHHHHHHHHHHK..',
-    '..KHHHHSSSSSSSHHHK..',
-    '..KHSSSSSSSSSSSSHK..',
-    '..KHSGGGGSSGGGGSHK..',
-    '..KHSGSEGGGGESGSHK..',
-    '..KHSGGGGSSGGGGSHK..',
-    '..KHSPSSSSSSSSPSHK..',
-    '..KHSSSMSSSSMSSSHK..',
-    '...KSSSSMMMMSSSSK...',
-    '....KSSSSSSSSSSK....',
-    '.....KKSSSSSSKK.....',
-    '.......KSSSSK.......',
-    '....KKKWSSSSWKKK....',
-    '..KKWWWWSNNSWWWWKK..',
-    '.KWWWWWWWSSWWWWWWWK.',
-    '.KWWWWWWWWWWWWWWWWK.',
-    'KWWwWWWWWWWWWWWWwWWK',
-    'KWWwWWWWWWWWWWWWwWWK',
-    'KWWwWWWWWWWWWWWWwWWK',
+    '.........KK.........',
+    '........KCCK........',
+    '........KCCK........',
+    '.......KCCCCK.......',
+    '.......KCYCCK.......',
+    '......KCCCCCCK......',
+    '......KCCCCYCK......',
+    '.....KCCCCCCCCK.....',
+    '....KYYYYYYYYYYK....',
+    '..KKCCCCCCCCCCCCKK..',
+    '.KCCCCCCCCCCCCCCCCK.',
+    '..KKKHHHHHHHHHHKKK..',
+    '...KHHSSSSSSSSHHK...',
+    '...KHSSSSSSSSSSHK...',
+    '...KHSSESSSSESSHK...',
+    '...KHSPSSSSSSPSHK...',
+    '...KHSSMSSSSMSSHK...',
+    '...KHSSSMMMMSSSHK...',
+    '...KHKSSSSSSSSKHK...',
+    '...KHHKKSSSSKKHHK...',
+    '....KKCCCSSCCCKK....',
+    '...KCCCCCYYCCCCCK...',
+    '..KCCCCCCCCCCCCCCK..',
+    '.KCCcCCCCCCCCCCcCCK.',
+    '.KCCcCCCCCCCCCCcCCK.',
+    'KCCCcCCCCCCCCCCcCCCK',
+    'KCCCcCCCCCCCCCCcCCCK',
 ];
 
 const palette: Record<string, string> = {
     K: '#2b2620', // outline
+    C: '#5b4a9e', // hat & cloak
+    c: '#3f3373', // cloak folds
+    Y: '#e6c35c', // stars, hat band & clasp
     H: '#e8c27a', // hair
-    L: '#f7e1a8', // hair highlight
     S: '#f6d3b8', // skin
     P: '#f2a6a0', // cheeks
-    G: '#c98f86', // glasses
     E: '#2b2620', // eyes
     M: '#2b2620', // smile
-    W: '#2f5a46', // sweater
-    w: '#23463a', // sweater shadow
-    N: '#e6c35c', // necklace
 };
 
 // Merge horizontal runs of the same colour into one rect to keep the SVG small
@@ -61,7 +64,7 @@ function PixelPortrait() {
             viewBox={`0 0 ${sprite[0].length} ${sprite.length}`}
             shapeRendering="crispEdges"
             role="img"
-            aria-label="Pixel art portrait of Maria"
+            aria-label="Pixel art of Maria as a wizard"
         >
             {pixels.map((p) => (
                 <rect key={`${p.x}-${p.y}`} x={p.x} y={p.y} width={p.width} height={1} fill={p.color} />
