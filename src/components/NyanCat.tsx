@@ -1,3 +1,5 @@
+import '../styles/NyanCat.css';
+
 // Pixel-art cat with a pop-tart body, drawn on a 34 × 21 grid.
 function NyanCat() {
     return (
