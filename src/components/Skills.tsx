@@ -1,55 +1,76 @@
+import { useCallback, useState } from 'react';
 import '../styles/Skills.css';
-
-const skills = [
-    {
-        title: 'Frontend',
-        text: [
-            'I build responsive and accessible web applications with a focus on clean UI, usability, and performance.',
-            'I enjoy turning designs into interactive web experiences using modern technologies.',
-        ],
-        tools: ['React', 'JavaScript', 'TypeScript', 'HTML', 'CSS', 'Responsive Design'],
-    },
-    {
-        title: 'Design',
-        text: [
-            'With a Bachelor’s degree in Graphic Design and a Master’s degree in IT & Cognition, I combine creative ideas with strong technical skills.',
-            'I enjoy designing products that are both intuitive and visually engaging.',
-        ],
-        tools: ['Figma', 'Adobe Creative Cloud', 'UI Design', 'Graphic Design', 'Prototyping', 'UX'],
-    },
-    {
-        title: 'Software Development',
-        text: [
-            'I have experience working across the full development workflow, from programming and version control to APIs and debugging.',
-            'I’m always learning new tools and technologies to expand my skill set.',
-        ],
-        tools: ['Python', 'C#', 'Node.js', 'Express', 'REST APIs', 'Git', 'GitHub'],
-    },
-    {
-        title: 'Artificial Intelligence',
-        text: [
-            'During my Master’s research I fine-tuned and evaluated transformer models in Python and used explainability methods to understand their predictions.',
-            'My interest lies in how new tools and technologies can be applied to real-world projects.',
-        ],
-        tools: ['Python', 'Transformers (XLM-R, mT5)', 'NLP', 'Fine-tuning', 'SHAP', 'Integrated Gradients'],
-    },
-];
+import SkillBreakout from './SkillBreakout';
+import { categories, categoryColor, skills, type Skill } from '../data/skills';
 
 function Skills() {
+    // Names of unlocked skills, newest first
+    const [collected, setCollected] = useState<string[]>([]);
+
+    const collect = useCallback((skill: Skill) => {
+        setCollected((prev) => (prev.includes(skill.name) ? prev : [skill.name, ...prev]));
+    }, []);
+
+    const unlockAll = () => setCollected(skills.map((skill) => skill.name));
+    const restart = useCallback(() => setCollected([]), []);
+
+    const unlocked = collected
+        .map((name) => skills.find((skill) => skill.name === name))
+        .filter((skill): skill is Skill => Boolean(skill));
+    const allUnlocked = collected.length === skills.length;
+
     return (
         <section id='skills' className='skills'>
             <h2 className="section-title">Skills</h2>
-            <div className='skills-block'>
-                {skills.map((skill) => (
-                    <article key={skill.title} className='card specific-skill'>
-                        <h3>{skill.title}</h3>
-                        {skill.text.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                        <ul className='tag-list' aria-label={`${skill.title} tools`}>
-                            {skill.tools.map((tool) => <li key={tool}>{tool}</li>)}
-                        </ul>
-                    </article>
+
+            <ul className="skill-legend" aria-label="Skill categories">
+                {categories.map((category) => (
+                    <li key={category.id}>
+                        <span className="skill-swatch" style={{ backgroundColor: category.color }} aria-hidden="true" />
+                        {category.label}
+                    </li>
                 ))}
+            </ul>
+
+            <div className="skills-game">
+                <SkillBreakout collected={collected} onCollect={collect} onRestart={restart} />
+
+                <aside className="skill-inventory" aria-label="Unlocked skills">
+                    <div className="skill-inventory-header">
+                        <h3>Unlocked</h3>
+                        <span className="skill-count">{collected.length} / {skills.length}</span>
+                    </div>
+
+                    {unlocked.length === 0 ? (
+                        <p className="skill-inventory-empty">Catch falling skills with the paddle – they’ll show up here.</p>
+                    ) : (
+                        <ul className="skill-inventory-list" aria-live="polite">
+                            {unlocked.map((skill) => (
+                                <li key={skill.name}>
+                                    <span className="skill-swatch" style={{ backgroundColor: categoryColor(skill.category) }} aria-hidden="true" />
+                                    <div>
+                                        <strong>{skill.name}</strong>
+                                        <p>{skill.blurb}</p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+
+                    {!allUnlocked && (
+                        <button type="button" className="skill-skip" onClick={unlockAll}>
+                            No time to play? Unlock all skills
+                        </button>
+                    )}
+                </aside>
             </div>
+
+            {/* Full list for screen readers and search engines – the game itself is a canvas */}
+            <ul className="visually-hidden">
+                {skills.map((skill) => (
+                    <li key={skill.name}>{skill.name}: {skill.blurb}</li>
+                ))}
+            </ul>
         </section>
     );
 }

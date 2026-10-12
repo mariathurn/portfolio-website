@@ -1,28 +1,196 @@
 .skills {
     background-color: var(--color-blue);
+    color: var(--color-white);
 }
 
-.skills-block {
+.skills .section-title {
+    margin-bottom: 20px;
+}
+
+
+/* Category legend */
+
+.skill-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-bottom: 24px;
+    list-style: none;
+    font-weight: 500;
+}
+
+.skill-legend li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skill-swatch {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+}
+
+
+/* Game + inventory */
+
+.skills-game {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px;
-    max-width: 1200px;
-    margin: 0 auto;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 24px;
+    align-items: start;
 }
 
-.specific-skill {
+.breakout {
+    position: relative;
+    border-radius: var(--radius-card);
+    background-color: rgba(0, 0, 0, 0.28);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+}
+
+.breakout-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: default;
+    /* Allow page scrolling over the board until the game starts */
+    touch-action: pan-y;
+}
+
+.breakout-canvas.is-active {
+    cursor: none;
+    touch-action: none;
+}
+
+.breakout-canvas:focus-visible {
+    outline: 3px solid var(--color-yellow);
+    outline-offset: -3px;
+}
+
+.breakout-overlay {
+    position: absolute;
+    inset: auto 0 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 32px 16px 40px;
+    text-align: center;
+    font-weight: 500;
 }
 
-.specific-skill .tag-list {
-    margin-top: auto;
-    padding-top: 8px;
+.breakout-win {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    text-transform: uppercase;
 }
 
-@media (max-width: 750px) {
-    .skills-block {
+.breakout-hint {
+    position: absolute;
+    bottom: 64px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+
+/* Inventory of unlocked skills */
+
+.skill-inventory {
+    display: flex;
+    flex-direction: column;
+    max-height: 560px;
+    padding: 20px;
+    border-radius: var(--radius-card);
+    background-color: var(--color-card);
+    color: var(--color-text);
+    box-shadow: var(--shadow-card);
+}
+
+.skill-inventory-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.skill-inventory h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.skill-count {
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.skill-inventory-empty {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+}
+
+.skill-inventory-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.skill-inventory-list li {
+    display: flex;
+    gap: 10px;
+    animation: skill-pop 0.35s ease;
+}
+
+.skill-inventory-list .skill-swatch {
+    margin-top: 5px;
+}
+
+.skill-inventory-list p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+}
+
+@keyframes skill-pop {
+    from {
+        opacity: 0;
+        transform: translateX(12px);
+    }
+}
+
+.skill-skip {
+    margin-top: 16px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--color-text-muted);
+    font: inherit;
+    font-size: 0.9rem;
+    text-align: left;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.skill-skip:hover {
+    color: var(--color-text);
+}
+
+@media (max-width: 900px) {
+    .skills-game {
         grid-template-columns: 1fr;
-        gap: 20px;
+    }
+
+    .skill-inventory {
+        max-height: 420px;
     }
 }
