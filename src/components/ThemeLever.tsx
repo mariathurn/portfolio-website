@@ -4,7 +4,7 @@ import { BANNER_DONE_EVENT } from '../events';
 type Theme = 'light' | 'dark';
 
 const HINT_SEEN_KEY = 'lever-hint-seen';
-const HINT_MS = 6000;
+const HINT_MS = 3000;
 
 const readStorage = (key: string) => {
     try {
@@ -80,7 +80,7 @@ function ThemeLever() {
             </button>
             {showHint && (
                 <p className="theme-lever-hint" role="status">
-                    Psst… pull me for night mode <span aria-hidden="true">🌙</span>
+                    <span aria-hidden="true">🌙</span>
                 </p>
             )}
         </div>
