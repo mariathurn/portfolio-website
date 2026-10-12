@@ -1,4 +1,4 @@
-// Skills shown as bricks in the Skill Breakout game. Edit freely.
+// Skills shown as bubbles in the Skill Runner game and in the overview under it. Edit freely.
 
 export type CategoryId = 'frontend' | 'design' | 'software' | 'ai';
 
@@ -12,36 +12,18 @@ export const categories: { id: CategoryId; label: string; color: string }[] = [
 export type Skill = {
     name: string;
     category: CategoryId;
-    blurb: string;
 };
 
-export const skills: Skill[] = [
-    { name: 'React', category: 'frontend', blurb: 'My go-to for interfaces – this site included.' },
-    { name: 'TypeScript', category: 'frontend', blurb: 'Catches my bugs before users do.' },
-    { name: 'JavaScript', category: 'frontend', blurb: 'Behind everything interactive I build.' },
-    { name: 'HTML', category: 'frontend', blurb: 'Semantic, accessible markup as the base.' },
-    { name: 'CSS', category: 'frontend', blurb: 'Layouts, animations – and that Nyan Cat.' },
-    { name: 'Responsive', category: 'frontend', blurb: 'Looks right from phone to big screen.' },
+const byCategory: Record<CategoryId, string[]> = {
+    frontend: ['React', 'TypeScript', 'React Native', 'REST APIs', 'HTML', 'CSS', 'UI Design'],
+    design: ['Graphic Design', 'Figma', 'Typography', 'Illustration', 'Photography', '3D Visualization', 'Presentation Skills'],
+    software: ['Python', 'C#', 'Java', 'Software Engineering', 'Game Development', 'Unity', 'Git'],
+    ai: ['NLP', 'Transformer Models', 'Explainable AI', 'Computer Vision', 'Machine Learning', 'Fine-Tuning'],
+};
 
-    { name: 'Figma', category: 'design', blurb: 'Where my interfaces start, before any code.' },
-    { name: 'UI Design', category: 'design', blurb: 'Clean, clear interfaces with an eye for detail.' },
-    { name: 'UX', category: 'design', blurb: 'Designing for how people actually use things.' },
-    { name: 'Prototyping', category: 'design', blurb: 'Clickable ideas before codeable ones.' },
-    { name: 'Graphic Design', category: 'design', blurb: 'My Bachelor’s: typography, colour and composition.' },
-    { name: 'Adobe CC', category: 'design', blurb: 'Photoshop, Illustrator & InDesign.' },
-
-    { name: 'Python', category: 'software', blurb: 'Data, machine learning and quick scripts.' },
-    { name: 'C#', category: 'software', blurb: 'Gameplay code for Donut Wars.' },
-    { name: 'Unity', category: 'software', blurb: 'Built a 2D survival game with it.' },
-    { name: 'Node.js', category: 'software', blurb: 'Small backends with Express.' },
-    { name: 'REST APIs', category: 'software', blurb: 'Connecting frontends to data.' },
-    { name: 'Git', category: 'software', blurb: 'Version control for everything I build.' },
-
-    { name: 'Transformers', category: 'ai', blurb: 'Fine-tuned XLM-R and mT5 for my thesis.' },
-    { name: 'NLP', category: 'ai', blurb: 'Named entity recognition in 3 languages.' },
-    { name: 'Fine-tuning', category: 'ai', blurb: 'Adapting big models to specific tasks.' },
-    { name: 'Explainable AI', category: 'ai', blurb: 'SHAP & Integrated Gradients: why models decide.' },
-];
+export const skills: Skill[] = categories.flatMap(({ id }) =>
+    byCategory[id].map((name) => ({ name, category: id })),
+);
 
 export const categoryColor = (id: CategoryId) =>
     categories.find((category) => category.id === id)?.color ?? '#fff';

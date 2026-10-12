@@ -21,26 +21,23 @@ function Skills() {
             {/* Quick overview for anyone who doesn't want to play */}
             <div className="skill-overview">
                 {categories.map((category) => (
-                    <table key={category.id} className="skill-table">
-                        <caption>
+                    <div key={category.id} className="skill-card">
+                        <h3>
                             <span className="skill-swatch" style={{ backgroundColor: category.color }} aria-hidden="true" />
                             {category.label}
-                        </caption>
-                        <tbody>
+                        </h3>
+                        <ul>
                             {skills.filter((skill) => skill.category === category.id).map((skill) => {
                                 const isCollected = collected.includes(skill.name);
                                 return (
-                                    <tr key={skill.name} className={isCollected ? 'is-collected' : ''}>
-                                        <th scope="row">
-                                            {skill.name}
-                                            {isCollected && <span className="skill-check" aria-label="collected"> ✓</span>}
-                                        </th>
-                                        <td>{skill.blurb}</td>
-                                    </tr>
+                                    <li key={skill.name} className={isCollected ? 'is-collected' : ''}>
+                                        {skill.name}
+                                        {isCollected && <span className="skill-check" aria-label="collected"> ✓</span>}
+                                    </li>
                                 );
                             })}
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
                 ))}
             </div>
         </section>
