@@ -249,12 +249,24 @@
     background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* ".button.cv-button" so it overrides .button from global.css, which loads later */
-.button.cv-button {
-    margin-top: 24px;
-    /* Size of the CV button only (other buttons: .button in global.css) */
-    font-size: 1rem;
-    padding: 9px 20px;
+/* CV link as one of the chips: same size, but filled so it reads as clickable */
+.about-facts li:has(.cv-chip) {
+    padding: 0;
+    border-color: var(--color-white);
+    background-color: var(--color-white);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cv-chip {
+    display: block;
+    padding: 6px 14px;
+    color: var(--color-green);
+    font-weight: 600;
+}
+
+.about-facts li:has(.cv-chip):hover {
+    border-color: var(--color-yellow);
+    background-color: var(--color-yellow);
 }
 
 @media (max-width: 750px) {
