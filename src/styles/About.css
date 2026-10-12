@@ -183,8 +183,9 @@
 
 .cv-button {
     margin-top: 24px;
+    /* Size of the CV button only (other buttons: .button in global.css) */
     font-size: 1.15rem;
-
+    padding: 14px 30px;
 }
 
 @media (max-width: 750px) {
