@@ -1,6 +1,6 @@
 import '../styles/About.css';
 import welcomeBanner from '../assets/welcome-banner.png'
-import profilePicture from '../assets/profile-picture.png'
+import profilePicture from '../assets/profile-picture.jpeg'
 
 function About() {
   return (
