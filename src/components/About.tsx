@@ -59,18 +59,17 @@ function About() {
         <article className='text-block'>
           <h1 className="section-title">Hej, I'm Maria!</h1>
           <p className="about-lead">
-            I'm a <mark>graphic designer</mark> who learned to <mark>code</mark> – and never stopped.
+            I'm a graphic designer who learned to code – and never stopped.
             Now I build interfaces that look good <em>and</em> work well.
           </p>
           <p className="about-status">
-            Fresh out of my Master's in IT &amp; Cognition at the University of Copenhagen – ready to bring design and code together in a team.
+            Fresh out of my Master's in IT &amp; Cognition at the University of Copenhagen – ready to bring design and code together.
           </p>
 
           <ul className="about-facts" aria-label="Quick facts">
             <li><span aria-hidden="true">📍</span> Copenhagen</li>
             <li><span aria-hidden="true">🎓</span> MSc IT &amp; Cognition</li>
             <li><span aria-hidden="true">🎨</span> BA Graphic Design</li>
-            <li><span aria-hidden="true">💼</span> Open to work</li>
           </ul>
 
           <a className="button button-primary cv-button" href={cv} target="_blank" rel="noopener noreferrer">
