@@ -313,9 +313,23 @@ function SkillRunner({ collected, onCollect, onRestart }: {
             const p = g.player;
             const running = g.status === 'playing' && g.stumble === 0;
             const inAir = p.y < 0;
-            const stride = Math.floor(tick / 7) % 2;
-            const bob = running && !inAir && stride === 1 ? PIXEL : 0;
-            const top = y - SPRITE_H - FEET_H + bob;
+
+            // Running cycle in 4 steps: left foot up, both down, right foot up, both down
+            const step = Math.floor(tick / 5) % 4;
+            const lift = 2 * PIXEL;
+            let leftLift = 0;
+            let rightLift = 0;
+            if (inAir) {
+                leftLift = PIXEL;
+                rightLift = PIXEL;
+            } else if (running) {
+                leftLift = step === 0 ? lift : 0;
+                rightLift = step === 2 ? lift : 0;
+            }
+            // Body bobs up a little while a foot is in the air
+            const bob = running && !inAir && step % 2 === 0 ? -PIXEL : 0;
+            const bodyBottom = y - FEET_H + bob;
+            const top = bodyBottom - SPRITE_H;
 
             // Blink after hitting a bug
             if (g.blink > 0 && Math.floor(tick / 5) % 2 === 0) return;
@@ -329,12 +343,14 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                 }
             });
 
-            // Little feet under the cloak, alternating while running
+            // Legs from the cloak down to the feet; the feet stand on the ground unless lifted
             ctx.fillStyle = wizardPalette.K;
-            const feetY = top + SPRITE_H;
-            const lift = running && !inAir ? stride * PIXEL : 0;
-            ctx.fillRect(x + 6 * PIXEL, feetY - lift, 3 * PIXEL, FEET_H);
-            ctx.fillRect(x + 11 * PIXEL, feetY - (running && !inAir ? (1 - stride) * PIXEL : 0), 3 * PIXEL, FEET_H);
+            const drawLeg = (legX: number, legLift: number) => {
+                const footBottom = y - legLift;
+                ctx.fillRect(x + legX * PIXEL, bodyBottom, 3 * PIXEL, Math.max(footBottom - bodyBottom, PIXEL));
+            };
+            drawLeg(6, leftLift);
+            drawLeg(11, rightLift);
         };
 
         const draw = () => {
@@ -560,7 +576,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
             {status === 'idle' && (
                 <div className="runner-overlay">
                     <button type="button" className="button button-primary" onClick={start}>▶ Start running</button>
-                    <p>Tap or press Space to jump – twice for a double jump.<br />Collect the bubbles, jump over the bugs 🐛</p>
+                    <p>Tap or press Space to jump.<br />Collect the spells, avoid bugs 🐛</p>
                 </div>
             )}
 
