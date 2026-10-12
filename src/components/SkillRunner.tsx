@@ -3,12 +3,14 @@ import { categories, categoryColor, skills, type Skill } from '../data/skills';
 import { wizardPalette, wizardSprite } from '../data/wizardSprite';
 
 // Side-scrolling runner: the pixel wizard runs on its own, tap/Space to jump (twice for a
-// double jump) and collect skill bubbles. Missed bubbles come back later – no game over.
+// double jump), collect skill bubbles and jump over bugs. Missed bubbles come back later;
+// hitting a bug only makes the wizard stumble – no game over.
 
 type Status = 'idle' | 'playing' | 'won';
 
 type Bubble = { skill: Skill; x: number; y: number; w: number; phase: number };
 type Popup = { text: string; color: string; x: number; y: number; life: number };
+type Obstacle = { x: number };
 
 type Layout = { W: number; H: number; ground: number; speed: number };
 
@@ -22,6 +24,35 @@ const GRAVITY = 0.6;
 const JUMP_V = -12;
 // Bubble heights above the ground: walk into it, single jump, double jump
 const LANES = [48, 125, 205];
+
+// Pixel bug obstacle, two frames for wiggling legs
+const BUG_FRAMES = [
+    [
+        '..K.....K..',
+        '...K...K...',
+        '..KRRRRRK..',
+        '.KRRWRWRRK.',
+        'KRRRKRKRRRK',
+        'KRRRRRRRRRK',
+        '.KRRRRRRRK.',
+        '.K..K.K..K.',
+    ],
+    [
+        '..K.....K..',
+        '...K...K...',
+        '..KRRRRRK..',
+        '.KRRWRWRRK.',
+        'KRRRKRKRRRK',
+        'KRRRRRRRRRK',
+        '.KRRRRRRRK.',
+        '..K.K..K.K.',
+    ],
+];
+const BUG_PALETTE: Record<string, string> = { K: '#2b2620', R: '#e5534b', W: '#ffffff' };
+const BUG_W = BUG_FRAMES[0][0].length * PIXEL;
+const BUG_H = BUG_FRAMES[0].length * PIXEL;
+const STUMBLE_FRAMES = 30;
+const BLINK_FRAMES = 90;
 
 const buildLayout = (narrow: boolean): Layout => {
     const W = narrow ? 480 : 900;
@@ -47,6 +78,10 @@ type Game = {
     collected: Set<string>;
     distance: number;
     nextSpawn: number;
+    obstacles: Obstacle[];
+    nextObstacle: number;
+    stumble: number;
+    blink: number;
     popups: Popup[];
 };
 
@@ -79,6 +114,10 @@ function SkillRunner({ collected, onCollect, onRestart }: {
         collected: new Set(),
         distance: 0,
         nextSpawn: 0,
+        obstacles: [],
+        nextObstacle: 0,
+        stumble: 0,
+        blink: 0,
         popups: [],
     });
     const onCollectRef = useRef(onCollect);
@@ -134,7 +173,9 @@ function SkillRunner({ collected, onCollect, onRestart }: {
         // A few bubbles already waiting on screen before the game starts
         if (g.bubbles.length === 0 && g.status === 'idle') {
             [0.45, 0.7, 0.95].forEach((at) => spawn(W * at));
+            g.obstacles.push({ x: W * 0.58 });
             g.nextSpawn = 260;
+            g.nextObstacle = 420;
         }
 
         const resizeCanvas = () => {
@@ -159,15 +200,34 @@ function SkillRunner({ collected, onCollect, onRestart }: {
                 p.jumpsLeft = 2;
             }
 
+            g.stumble = Math.max(0, g.stumble - k);
+            g.blink = Math.max(0, g.blink - k);
+
             if (running) {
-                const dx = g.layout.speed * k;
+                // After hitting a bug the wizard stops briefly, then speeds up again
+                const pace = g.stumble > 0 ? 0 : 1 - Math.min(g.blink / BLINK_FRAMES, 1) * 0.4;
+                const dx = g.layout.speed * pace * k;
                 g.distance += dx;
                 g.bubbles.forEach((b) => { b.x -= dx; });
+                g.obstacles.forEach((o) => { o.x -= dx; });
+                g.obstacles = g.obstacles.filter((o) => o.x + BUG_W > -10);
 
                 g.nextSpawn -= dx;
                 if (g.nextSpawn <= 0) {
                     spawn(W + 20);
                     g.nextSpawn = 200 + Math.random() * 140;
+                }
+
+                // Bugs: never right under a low bubble, so both stay reachable
+                g.nextObstacle -= dx;
+                if (g.nextObstacle <= 0) {
+                    const blocked = g.bubbles.some((b) => b.y > ground - 80 && Math.abs(b.x - (W + 20)) < 140);
+                    if (blocked) {
+                        g.nextObstacle = 60;
+                    } else {
+                        g.obstacles.push({ x: W + 20 });
+                        g.nextObstacle = 380 + Math.random() * 320;
+                    }
                 }
             }
 
@@ -176,6 +236,17 @@ function SkillRunner({ collected, onCollect, onRestart }: {
             const bottom = ground + p.y;
             const left = playerX + 8;
             const right = playerX + SPRITE_W - 8;
+
+            if (running && g.blink === 0) {
+                const hitBug = g.obstacles.some((o) =>
+                    o.x + 4 < right && o.x + BUG_W - 4 > left && bottom > ground - BUG_H + 6);
+                if (hitBug) {
+                    g.stumble = STUMBLE_FRAMES;
+                    g.blink = BLINK_FRAMES;
+                    g.popups.push({ text: 'Bug! 🐛', color: '#e5534b', x: playerX + SPRITE_W / 2, y: top - 10, life: 1 });
+                }
+            }
+
             g.bubbles = g.bubbles.filter((b) => {
                 const hit = b.x < right && b.x + b.w > left && b.y - BUBBLE_H / 2 < bottom && b.y + BUBBLE_H / 2 > top;
                 if (hit && running) {
@@ -199,11 +270,14 @@ function SkillRunner({ collected, onCollect, onRestart }: {
 
         const drawWizard = (x: number, y: number) => {
             const p = g.player;
-            const running = g.status === 'playing';
+            const running = g.status === 'playing' && g.stumble === 0;
             const inAir = p.y < 0;
             const stride = Math.floor(tick / 7) % 2;
             const bob = running && !inAir && stride === 1 ? PIXEL : 0;
             const top = y - SPRITE_H - FEET_H + bob;
+
+            // Blink after hitting a bug
+            if (g.blink > 0 && Math.floor(tick / 5) % 2 === 0) return;
 
             wizardSprite.forEach((row, ry) => {
                 for (let rx = 0; rx < row.length; rx++) {
@@ -241,6 +315,19 @@ function SkillRunner({ collected, onCollect, onRestart }: {
             ctx.fillRect(0, ground, W, 4);
             ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
             for (let tx = -(g.distance % 36); tx < W; tx += 36) ctx.fillRect(tx, ground + 14, 18, 4);
+
+            // Bugs crawling on the ground
+            const bugFrame = BUG_FRAMES[Math.floor(tick / 8) % 2];
+            for (const o of g.obstacles) {
+                bugFrame.forEach((row, ry) => {
+                    for (let rx = 0; rx < row.length; rx++) {
+                        const color = BUG_PALETTE[row[rx]];
+                        if (!color) continue;
+                        ctx.fillStyle = color;
+                        ctx.fillRect(o.x + rx * PIXEL, ground - BUG_H + ry * PIXEL, PIXEL, PIXEL);
+                    }
+                });
+            }
 
             // Skill bubbles
             ctx.textAlign = 'center';
@@ -354,13 +441,14 @@ function SkillRunner({ collected, onCollect, onRestart }: {
             {status === 'idle' && (
                 <div className="runner-overlay">
                     <button type="button" className="button button-primary" onClick={start}>▶ Start running</button>
-                    <p>Tap or press Space to jump – twice for a double jump.</p>
+                    <p>Tap or press Space to jump – twice for a double jump.<br />Collect the bubbles, jump over the bugs 🐛</p>
                 </div>
             )}
 
             {status === 'won' && (
                 <div className="runner-overlay">
                     <p className="runner-win">All bars full! 🎉</p>
+                    <p className="runner-win-message">✨ You're a wizard now ✨</p>
                     <button type="button" className="button button-primary" onClick={start}>Run again</button>
                 </div>
             )}
