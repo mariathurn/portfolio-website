@@ -8,7 +8,7 @@ function Contact() {
                 <p className='contact-tagline'>Let's meet!</p>
                 <p className='contact-text'>Open to frontend developer roles in Copenhagen and remote.</p>
                 <div className='contact-ways'>
-                    <a className="button button-primary" href="mailto:mariathurn@web.de">Email me</a>
+                    <a className="button button-primary" href="mailto:mail@mariathurn.de">Email me</a>
                     <a className="button button-secondary" href="https://www.linkedin.com/in/maria-thurn-134421142/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 </div>
             </div>

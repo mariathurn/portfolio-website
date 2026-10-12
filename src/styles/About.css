@@ -11,7 +11,7 @@
 .welcome-banner {
     display: block;
     width: 100%;
-    max-width: 760px;
+    max-width: 7px;
     height: auto;
     margin: 0 auto;
 }
@@ -30,10 +30,10 @@
 
 .profile-picture {
     display: block;
-    width: 300px;
+    width: 280px;
     max-width: 100%;
     height: auto;
-    border: 3px dashed aliceblue;
+    border: 3px solid aliceblue;
     border-radius: 30px;
 }
 
