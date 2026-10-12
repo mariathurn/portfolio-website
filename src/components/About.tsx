@@ -66,7 +66,10 @@ function About() {
         <article className='text-block'>
           <h1 className="section-title">Hej, I'm Maria!</h1>
           <SpeechBubble className="about-lead">
-            I'm a graphic designer who learned to code. <br />Now I build whatever comes to my mind.
+            {/* Terminal look: prompt in front, blinking cursor at the end; &nbsp; keeps the last two words together */}
+            <span className="prompt" aria-hidden="true">&gt; </span>
+            I'm a graphic designer who learned to&nbsp;code. <br />Now I build whatever comes to my&nbsp;mind.
+            <span className="cursor" aria-hidden="true" />
           </SpeechBubble>
 
           <ul className="about-facts" aria-label="Quick facts">
