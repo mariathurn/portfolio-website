@@ -4,6 +4,7 @@ import welcomeBanner from '../assets/welcome-banner.png'
 import profilePicture from '../assets/profile-picture.jpeg'
 import cv from '../assets/CV.pdf'
 import NyanCat from './NyanCat';
+import { BANNER_DONE_EVENT } from '../events';
 import CharacterSheet from './CharacterSheet';
 
 // Banner intro: fade in, cat flies through and wipes it away, then the space collapses.
@@ -18,6 +19,11 @@ const prefersReducedMotion = () =>
 
 function About() {
   const [phase, setPhase] = useState<BannerPhase>(() => (prefersReducedMotion() ? 'gone' : 'intro'));
+
+  // Tell the dark-mode lever that the intro is over, so it can show its hint
+  useEffect(() => {
+    if (phase === 'gone') window.dispatchEvent(new Event(BANNER_DONE_EVENT));
+  }, [phase]);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -65,8 +71,8 @@ function About() {
 
           <ul className="about-facts" aria-label="Quick facts">
             <li><span aria-hidden="true">📍</span> Copenhagen</li>
-            <li><span aria-hidden="true">🎓</span> MSc IT &amp; Cognition</li>
-            <li><span aria-hidden="true">🎨</span> BA Graphic Design</li>            https://www.artstation.com/mariathurn
+            <li><span aria-hidden="true">🎓</span> MSc IT &amp; Cognition</li> {/*https://www.ku.dk/studies/masters/it-and-cognition*/}
+            <li><span aria-hidden="true">🎨</span> BA Graphic Design</li>          {/*   https://www.artstation.com/mariathurn */}
           </ul>
 
           <a className="button button-primary cv-button" href={cv} target="_blank" rel="noopener noreferrer">
