@@ -161,39 +161,39 @@
     margin-bottom: 39px;
 }
 
-/* Speech bubble with a white border, its tail pointing at the photo */
+/* Speech bubble: the outline is an SVG shape drawn by SpeechBubble.tsx */
 .about-lead {
-    position: relative;
     width: fit-content;
     max-width: 100%;
+    padding: 20px 28px;
     font-size: 1.4rem;
     font-weight: 500;
     line-height: 1.65;
-    /* Same border as the profile picture */
-    --bubble-border: 3px solid aliceblue;
     /* A touch lighter than the section – follows dark mode automatically */
     --bubble-bg: color-mix(in srgb, var(--color-green) 88%, white);
-    padding: 20px 28px;
-    border: var(--bubble-border);
-    border-radius: 36px;
-    background-color: var(--bubble-bg);
-    transition: background-color 0.4s ease;
 }
 
-.about-lead::before {
-    content: '';
+.speech-bubble {
+    position: relative;
+    /* Keeps the shape (z-index -1) behind the text but above the section background */
+    isolation: isolate;
+}
+
+.speech-bubble-shape {
     position: absolute;
-    top: 28px;
-    left: -13px;
-    width: 22px;
-    height: 22px;
-    /* Rotated square with two borders: covers the bubble's edge and forms a soft, rounded tip */
-    background-color: var(--bubble-bg);
-    border-left: var(--bubble-border);
-    border-bottom: var(--bubble-border);
-    border-bottom-left-radius: 6px;
-    transform: rotate(45deg);
-    transition: background-color 0.4s ease;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    overflow: visible;
+}
+
+.speech-bubble-shape path {
+    fill: var(--bubble-bg);
+    /* Same border as the profile picture */
+    stroke: aliceblue;
+    stroke-width: 3;
+    stroke-linejoin: round;
+    transition: fill 0.4s ease;
 }
 
 .about-facts {
@@ -247,13 +247,5 @@
     .about-lead {
         font-size: 1.3rem;
         padding: 18px 22px;
-        border-radius: 30px;
-    }
-
-    /* Photo sits above on mobile: tail points up */
-    .about-lead::before {
-        top: -13px;
-        left: 36px;
-        transform: rotate(135deg);
     }
 }

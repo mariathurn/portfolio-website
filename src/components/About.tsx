@@ -4,6 +4,7 @@ import welcomeBanner from '../assets/welcome-banner.png'
 import profilePicture from '../assets/profile-picture.jpeg'
 import cv from '../assets/CV.pdf'
 import NyanCat from './NyanCat';
+import SpeechBubble from './SpeechBubble';
 import { BANNER_DONE_EVENT } from '../events';
 import CharacterSheet from './CharacterSheet';
 
@@ -64,9 +65,9 @@ function About() {
         <img className="profile-picture" src={profilePicture} alt="Portrait of Maria Thurn" />
         <article className='text-block'>
           <h1 className="section-title">Hej, I'm Maria!</h1>
-          <p className="about-lead">
-            I'm a graphic designer who learned to code. Now I build whatever comes to my mind.
-          </p>
+          <SpeechBubble className="about-lead">
+            I'm a graphic designer who learned to code. <br />Now I build whatever comes to my mind.
+          </SpeechBubble>
 
           <ul className="about-facts" aria-label="Quick facts">
             <li><span aria-hidden="true">📍</span> Copenhagen</li>
