@@ -20,6 +20,9 @@
   --font-scribble: 'Rubik Scribble', sans-serif;
   --font-mono: 'DM Mono', monospace;
 
+  /* Shared width of the About block and the character sheet, so their left edges line up */
+  --content-width: 1200px;
+
   --radius-card: 16px;
   --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.18);
   --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.26);

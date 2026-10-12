@@ -134,7 +134,7 @@
     gap: clamp(28px, 6vw, 76px);
     align-items: flex-start;
     justify-content: left;
-    max-width: 1200px;
+    max-width: var(--content-width);
     margin: 0 auto;
 }
 
