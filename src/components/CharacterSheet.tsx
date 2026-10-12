@@ -21,12 +21,12 @@ const abilities = [
 
 const traits = [
     { label: 'Personality', text: 'Can be stuborn, while finishing a goal. Might require frequent focus potions.' },
-    { label: 'Ideal', text: 'Interfaces should be both beautiful and easy to use.' },
-    { label: 'Bond', text: 'Bringing Bavarian card games to Denmark, one player at a time.' },
+    { label: 'Ideal', text: 'Beauty. Interfaces should be both beautiful and easy to use.' },
+    { label: 'Bond', text: 'Loves their 1000 different hobbies and their 2 cats.' },
     { label: 'Flaw', text: 'Will notice your kerning.' },
 ];
 
-const inventory = ['Figma', 'VS Code', 'A deck of Bavarian cards', 'An ever-growing danish vocabulary', 'Donuts (for defence)'];
+const inventory = ['Figma', 'VS Code', 'A deck of Bavarian playing cards', 'An ever-growing danish vocabulary', 'Donuts (for defense)'];
 
 function CharacterSheet() {
     return (
