@@ -169,22 +169,29 @@
     font-size: 1.4rem;
     font-weight: 500;
     line-height: 1.65;
-    padding: 18px 24px;
-    border: 3px solid var(--color-white);
-    border-radius: 24px;
+    /* Same border as the profile picture */
+    --bubble-border: 3px solid aliceblue;
+    /* A touch lighter than the section – follows dark mode automatically */
+    --bubble-bg: color-mix(in srgb, var(--color-green) 88%, white);
+    padding: 20px 28px;
+    border: var(--bubble-border);
+    border-radius: 36px;
+    background-color: var(--bubble-bg);
+    transition: background-color 0.4s ease;
 }
 
 .about-lead::before {
     content: '';
     position: absolute;
-    top: 26px;
-    left: -12px;
-    width: 20px;
-    height: 20px;
-    /* Same colour as the section, so it covers the bubble's border where the tail starts */
-    background-color: var(--color-green);
-    border-left: 3px solid var(--color-white);
-    border-bottom: 3px solid var(--color-white);
+    top: 28px;
+    left: -13px;
+    width: 22px;
+    height: 22px;
+    /* Rotated square with two borders: covers the bubble's edge and forms a soft, rounded tip */
+    background-color: var(--bubble-bg);
+    border-left: var(--bubble-border);
+    border-bottom: var(--bubble-border);
+    border-bottom-left-radius: 6px;
     transform: rotate(45deg);
     transition: background-color 0.4s ease;
 }
@@ -239,13 +246,14 @@
 
     .about-lead {
         font-size: 1.3rem;
-        padding: 16px 20px;
+        padding: 18px 22px;
+        border-radius: 30px;
     }
 
     /* Photo sits above on mobile: tail points up */
     .about-lead::before {
-        top: -12px;
-        left: 32px;
+        top: -13px;
+        left: 36px;
         transform: rotate(135deg);
     }
 }
