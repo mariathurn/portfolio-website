@@ -18,26 +18,22 @@ function Skills() {
 
             <SkillRunner collected={collected} onCollect={collect} onRestart={restart} />
 
-            {/* Quick overview for anyone who doesn't want to play */}
+            {/* Quick overview for anyone who doesn't want to play – independent of the game */}
             <div className="skill-overview">
                 {categories.map((category) => (
-                    <div key={category.id} className="skill-card">
-                        <h3>
+                    <table key={category.id} className="skill-table">
+                        <caption>
                             <span className="skill-swatch" style={{ backgroundColor: category.color }} aria-hidden="true" />
                             {category.label}
-                        </h3>
-                        <ul>
-                            {skills.filter((skill) => skill.category === category.id).map((skill) => {
-                                const isCollected = collected.includes(skill.name);
-                                return (
-                                    <li key={skill.name} className={isCollected ? 'is-collected' : ''}>
-                                        {skill.name}
-                                        {isCollected && <span className="skill-check" aria-label="collected"> ✓</span>}
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </div>
+                        </caption>
+                        <tbody>
+                            {skills.filter((skill) => skill.category === category.id).map((skill) => (
+                                <tr key={skill.name}>
+                                    <td>{skill.name}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 ))}
             </div>
         </section>
