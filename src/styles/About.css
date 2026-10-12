@@ -164,6 +164,12 @@
     line-height: 1.65;
 }
 
+/* Each sentence on its own line, wrapped evenly – no lonely last word */
+.about-lead span {
+    display: block;
+    text-wrap: balance;
+}
+
 .about-facts {
     display: flex;
     flex-wrap: wrap;
