@@ -130,7 +130,8 @@
 
 .about-block {
     display: flex;
-    gap: 76px;
+    /* Gap, photo and heading scale with the screen, so the text keeps room around 800px */
+    gap: clamp(28px, 6vw, 76px);
     align-items: flex-start;
     justify-content: left;
     max-width: 1100px;
@@ -139,7 +140,8 @@
 
 .profile-picture {
     display: block;
-    width: 260px;
+    flex-shrink: 0;
+    width: clamp(180px, 26vw, 260px);
     max-width: 100%;
     height: auto;
     border: 3px solid aliceblue;
@@ -154,7 +156,7 @@
 }
 
 .text-block .section-title {
-    font-size: clamp(2.5rem, 6.5vw, 4.25rem);
+    font-size: clamp(2.25rem, 5.2vw, 4.25rem);
     line-height: 1;
     margin-bottom: 39px;
 }
@@ -214,6 +216,8 @@
     }
 
     .about-lead {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        padding-right: 20px;
+        padding-left: 5px;
     }
 }
