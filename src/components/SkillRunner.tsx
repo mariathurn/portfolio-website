@@ -589,7 +589,7 @@ function SkillRunner({ collected, onCollect, onRestart }: {
 
             {status === 'won' && (
                 <div className="runner-overlay">
-                    <p className="runner-win">All bars full! 🎉</p>
+                    <p className="runner-win">All skills full! 🎉</p>
                     <p className="runner-win-message">✨ You're a wizard now ✨</p>
                     <button type="button" className="button button-primary" onClick={start}>Run again</button>
                 </div>
