@@ -15,7 +15,7 @@ function Projects() {
                     <div className="project-media project-media-logo" style={{ backgroundColor: '#ff412c' }}>
                         <img src={huskLogo} alt="Husk app logo" loading="lazy" />
                     </div>
-                    <h3>Husk – Danish Vocabulary App</h3>
+                    <h3>Husk – Danish Learning App</h3>
                     <ul className='tag-list' aria-label="Technologies">
                         <li>React Native</li>
                         <li>Expo</li>

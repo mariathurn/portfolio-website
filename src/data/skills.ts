@@ -18,7 +18,7 @@ const byCategory: Record<CategoryId, string[]> = {
     frontend: ['React', 'TypeScript', 'React Native', 'REST APIs', 'HTML', 'CSS', 'UI Design'],
     design: ['Graphic Design', 'Figma', 'Typography', 'Illustration', 'Photography', '3D Visualization', 'Presentation Skills'],
     software: ['Python', 'C#', 'Java', 'Software Engineering', 'Game Development', 'Unity', 'Git'],
-    ai: ['NLP', 'Transformer Models', 'Explainable AI', 'Computer Vision', 'Machine Learning', 'Fine-Tuning'],
+    ai: ['NLP', 'Transformer Models', 'Explainable AI', 'Computer Vision', 'Machine Learning', 'Fine-Tuning', 'Scientific Programming'],
 };
 
 export const skills: Skill[] = categories.flatMap(({ id }) =>
