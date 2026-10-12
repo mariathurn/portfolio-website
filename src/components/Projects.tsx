@@ -4,12 +4,36 @@ import schafkopfPoster from '../assets/schafkopf-poster.jpg';
 import donutImage from '../assets/donut.jpg';
 import thesisImage from '../assets/thesis-img.jpg';
 import thesisPdf from '../assets/thesis.pdf';
+import huskLogo from '../assets/husk-logo.png';
 
 function Projects() {
     return (
         <section id='projects' className='projects'>
             <h2 className="section-title">Projects</h2>
             <div className='projects-block'>
+                <article className='card specific-project'>
+                    <div className="project-media project-media-logo" style={{ backgroundColor: '#ff412c' }}>
+                        <img src={huskLogo} alt="Husk app logo" loading="lazy" />
+                    </div>
+                    <h3>Husk – Danish Vocabulary App</h3>
+                    <ul className='tag-list' aria-label="Technologies">
+                        <li>React Native</li>
+                        <li>Expo</li>
+                        <li>TypeScript</li>
+                        <li>SQLite</li>
+                        <li>Supabase</li>
+                    </ul>
+                    <p>
+                        An offline-first mobile app for learning Danish vocabulary. Words are scheduled with the FSRS
+                        spaced-repetition algorithm, so each one comes back right before you would forget it.
+                    </p>
+                    <p>
+                        Lessons follow the CEFR levels A1–B1 and unlock step by step, with pronunciation audio,
+                        verb and grammar drills, and optional sync between devices.
+                    </p>
+                    <p className="project-status">Currently in development</p>
+                </article>
+
                 <article className='card specific-project'>
                     <video className="project-media" controls preload="none" poster={schafkopfPoster}>
                         <source src={schafkopfVideo} type="video/mp4" />
