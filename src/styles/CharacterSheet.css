@@ -62,7 +62,8 @@
 
 .sheet-body {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    /* Abilities keep their box width; traits & inventory take the rest */
+    grid-template-columns: 2fr 3fr;
     gap: 24px;
     margin-top: 24px;
 }
