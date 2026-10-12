@@ -4,6 +4,7 @@ import welcomeBanner from '../assets/welcome-banner.png'
 import profilePicture from '../assets/profile-picture.jpeg'
 import cv from '../assets/CV.pdf'
 import NyanCat from './NyanCat';
+import CharacterSheet from './CharacterSheet';
 
 // Banner intro: fade in, cat flies through and wipes it away, then the space collapses.
 const INTRO_MS = 2400;
@@ -71,6 +72,8 @@ function About() {
           </a>
         </article>
       </div>
+
+      <CharacterSheet />
     </section>
   );
 }
