@@ -17,6 +17,9 @@ function Contact() {
                 <p>
                     <a href="https://www.artstation.com/mariathurn" target="_blank" rel="noopener noreferrer">Older artwork on ArtStation</a>
                 </p>
+                <p>
+                    <a href="/datenschutz.html">Datenschutz & Kontakt</a>
+                </p>
             </footer>
         </section>
     );
