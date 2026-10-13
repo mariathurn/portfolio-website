@@ -3,7 +3,7 @@ import PixelPortrait from './PixelPortrait';
 
 // Edit freely – everything shown on the sheet lives in these lists.
 const details = [
-    { label: 'Class', value: 'Frontend Developer' },
+    { label: 'Class', value: 'Software Developer' },
     { label: 'Subclass', value: 'Tech Wizard' },
     { label: 'Level', value: '34' },
     { label: 'Origin', value: 'Bavaria → Copenhagen' },
