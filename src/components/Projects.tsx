@@ -1,32 +1,36 @@
 import { useEffect, useState } from 'react';
 import '../styles/Projects.css';
 import AlmsommerStory, { ALMSOMMER_URL } from './AlmsommerStory';
+import HuskStory from './HuskStory';
 import almsommerImage from '../assets/almsommer.jpg';
 import donutImage from '../assets/donut.jpg';
 import thesisImage from '../assets/thesis-img.jpg';
 import thesisPdf from '../assets/thesis.pdf';
 import huskLogo from '../assets/husk-logo.png';
 
-const STORY_HASH = '#almsommer';
+// Projects with a slideshow; each also opens from a link to #<id>.
+const stories = ['almsommer', 'husk'] as const;
+type Story = (typeof stories)[number];
+
+const storyFromHash = (): Story | null => stories.find((id) => window.location.hash === `#${id}`) ?? null;
 
 function Projects() {
-    // The Almsommer slideshow also opens from a link to #almsommer.
-    const [storyOpen, setStoryOpen] = useState(() => window.location.hash === STORY_HASH);
+    const [openStory, setOpenStory] = useState<Story | null>(storyFromHash);
 
     useEffect(() => {
-        const onHashChange = () => setStoryOpen(window.location.hash === STORY_HASH);
+        const onHashChange = () => setOpenStory(storyFromHash());
         window.addEventListener('hashchange', onHashChange);
         return () => window.removeEventListener('hashchange', onHashChange);
     }, []);
 
-    const openStory = () => {
-        history.replaceState(null, '', STORY_HASH);
-        setStoryOpen(true);
+    const showStory = (story: Story) => {
+        history.replaceState(null, '', `#${story}`);
+        setOpenStory(story);
     };
 
     const closeStory = () => {
         history.replaceState(null, '', window.location.pathname + window.location.search);
-        setStoryOpen(false);
+        setOpenStory(null);
     };
 
     return (
@@ -34,7 +38,7 @@ function Projects() {
             <h2 className="section-title">Projects</h2>
             <div className='projects-block'>
 
-                <article className='card specific-project is-clickable' onClick={openStory}>
+                <article className='card specific-project is-clickable' onClick={() => showStory('almsommer')}>
                     <img className="project-media" src={almsommerImage} alt="The Almsommer title screen: four illustrated shepherds on an alpine meadow at dusk" loading="lazy" />
                     <h3>Almsommer – Schafkopf Card Game</h3>
                     <ul className='tag-list' aria-label="Technologies">
@@ -61,7 +65,7 @@ function Projects() {
                         </a>
                     </div>
                 </article>
-                <article className='card specific-project'>
+                <article className='card specific-project is-clickable' onClick={() => showStory('husk')}>
                     <div className="project-media project-media-logo" style={{ backgroundColor: '#ff412c' }}>
                         <img src={huskLogo} alt="Husk app logo" loading="lazy" />
                     </div>
@@ -82,6 +86,11 @@ function Projects() {
                         verb and grammar drills, and optional sync between devices.
                     </p>
                     <p className="project-status">Currently in development</p>
+                    <div className="project-links">
+                        <button type="button" className="button button-dark">
+                            Discover the app
+                        </button>
+                    </div>
                 </article>
 
 
@@ -131,7 +140,8 @@ function Projects() {
                 </article>
             </div>
 
-            <AlmsommerStory open={storyOpen} onClose={closeStory} />
+            <AlmsommerStory open={openStory === 'almsommer'} onClose={closeStory} />
+            <HuskStory open={openStory === 'husk'} onClose={closeStory} />
         </section>
     );
 }

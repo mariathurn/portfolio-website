@@ -1,0 +1,221 @@
+/* Husk slideshow (HuskStory.tsx): the app's own colours, red in light mode and violet in dark mode */
+
+.husk-story {
+    --story-paper: #fafafa;
+    --story-ink: #1f2328;
+    --story-muted: #5b6370;
+    --story-gold: #ff412c;
+    --story-line: #e3e5e8;
+    --story-chip: #f0f1f3;
+}
+
+:root[data-theme="dark"] .husk-story {
+    --story-paper: #0f111d;
+    --story-ink: #eef0f8;
+    --story-muted: #a3a8c3;
+    --story-gold: #7b68ee;
+    --story-line: #262a40;
+    --story-chip: #1b1e30;
+}
+
+.husk-story .story-badge {
+    color: #fff;
+}
+
+.husk-credit {
+    font-size: 0.85rem;
+    color: var(--story-muted);
+}
+
+.husk-caption {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--story-muted);
+}
+
+
+/* Phone screenshots */
+
+.husk-phone {
+    display: block;
+    height: min(500px, 62dvh);
+    width: auto;
+    aspect-ratio: 739 / 1600;
+    border-radius: 28px;
+    border: 7px solid #15171f;
+    background-color: #15171f;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+.husk-phones {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.husk-phones .husk-phone {
+    height: min(460px, 56dvh);
+}
+
+/* Three phones overlap like a small fan */
+.husk-phones.is-trio {
+    gap: 0;
+}
+
+.husk-phones.is-trio .husk-phone {
+    height: min(420px, 50dvh);
+}
+
+.husk-phones.is-trio .husk-phone:nth-child(1) {
+    transform: rotate(-6deg) translate(24px, 14px);
+}
+
+.husk-phones.is-trio .husk-phone:nth-child(2) {
+    position: relative;
+    z-index: 1;
+}
+
+.husk-phones.is-trio .husk-phone:nth-child(3) {
+    transform: rotate(6deg) translate(-24px, 14px);
+}
+
+
+/* The review card that turns over */
+
+.husk-flip-wrap {
+    display: grid;
+    justify-items: center;
+}
+
+.husk-flip {
+    display: grid;
+    padding: 0;
+    border: none;
+    background: none;
+    border-radius: 28px;
+    cursor: pointer;
+    perspective: 1400px;
+}
+
+.husk-flip .husk-phone {
+    grid-area: 1 / 1;
+    backface-visibility: hidden;
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.25, 1);
+}
+
+.husk-flip-back {
+    transform: rotateY(180deg);
+}
+
+.husk-flip.is-flipped .husk-flip-front {
+    transform: rotateY(-180deg);
+}
+
+.husk-flip.is-flipped .husk-flip-back {
+    transform: rotateY(0deg);
+}
+
+
+/* The course: levels with ten-word lessons */
+
+.husk-course {
+    width: 100%;
+    max-width: 460px;
+}
+
+.husk-level {
+    display: grid;
+    grid-template-columns: 48px 1fr 64px;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    background-color: var(--story-chip);
+    opacity: 0.45;
+    transition: opacity 0.5s ease;
+}
+
+.husk-level.is-open {
+    opacity: 1;
+}
+
+.husk-level-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+}
+
+.husk-level-state {
+    font-size: 0.85rem;
+    color: var(--story-muted);
+    text-align: right;
+}
+
+.husk-lessons {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+}
+
+.husk-lessons span {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--story-gold);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.husk-lessons span.is-done {
+    background-color: var(--story-gold);
+    transform: scale(1.1);
+}
+
+.husk-directions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.husk-directions span:not(.husk-directions-arrow) {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background-color: var(--story-gold);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.husk-directions-arrow {
+    font-size: 0.85rem;
+    color: var(--story-muted);
+}
+
+@media (max-width: 750px) {
+    .husk-phone {
+        height: min(420px, 52dvh);
+    }
+
+    .husk-phones .husk-phone {
+        height: auto;
+        width: calc(50% - 8px);
+    }
+
+    .husk-phones {
+        gap: 12px;
+    }
+
+    .husk-phones.is-trio .husk-phone {
+        width: 33%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .husk-flip .husk-phone,
+    .husk-level,
+    .husk-lessons span {
+        transition: none;
+    }
+}
