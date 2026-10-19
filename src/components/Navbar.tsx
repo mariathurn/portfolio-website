@@ -22,7 +22,8 @@ function Navbar() {
   const navColor = sectionColors[activeSection] ?? sectionColors.about;
 
   useEffect(() => {
-    const sections = document.querySelectorAll<HTMLElement>("main section");
+    // Only the page sections, not sections nested inside them (e.g. the Almsommer slides)
+    const sections = document.querySelectorAll<HTMLElement>("main > section[id]");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

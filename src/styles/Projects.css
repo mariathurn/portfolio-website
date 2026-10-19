@@ -56,8 +56,35 @@
 }
 
 .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
     margin-top: auto;
     padding-top: 8px;
+}
+
+.project-status + .project-links {
+    margin-top: 0;
+}
+
+/* A tile that opens more details when clicked anywhere */
+.specific-project.is-clickable {
+    cursor: pointer;
+}
+
+.button-outline {
+    background-color: transparent;
+    border-color: var(--button-dark-bg);
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+.button-outline:hover {
+    background-color: var(--color-tag-bg);
+}
+
+.project-links button.button {
+    cursor: pointer;
 }
 
 @media (max-width: 750px) {

@@ -1,16 +1,66 @@
+import { useEffect, useState } from 'react';
 import '../styles/Projects.css';
-import schafkopfVideo from '../assets/schafkopf.mp4';
-import schafkopfPoster from '../assets/schafkopf-poster.jpg';
+import AlmsommerStory, { ALMSOMMER_URL } from './AlmsommerStory';
+import almsommerImage from '../assets/almsommer.jpg';
 import donutImage from '../assets/donut.jpg';
 import thesisImage from '../assets/thesis-img.jpg';
 import thesisPdf from '../assets/thesis.pdf';
 import huskLogo from '../assets/husk-logo.png';
 
+const STORY_HASH = '#almsommer';
+
 function Projects() {
+    // The Almsommer slideshow also opens from a link to #almsommer.
+    const [storyOpen, setStoryOpen] = useState(() => window.location.hash === STORY_HASH);
+
+    useEffect(() => {
+        const onHashChange = () => setStoryOpen(window.location.hash === STORY_HASH);
+        window.addEventListener('hashchange', onHashChange);
+        return () => window.removeEventListener('hashchange', onHashChange);
+    }, []);
+
+    const openStory = () => {
+        history.replaceState(null, '', STORY_HASH);
+        setStoryOpen(true);
+    };
+
+    const closeStory = () => {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+        setStoryOpen(false);
+    };
+
     return (
         <section id='projects' className='projects'>
             <h2 className="section-title">Projects</h2>
             <div className='projects-block'>
+
+                <article className='card specific-project is-clickable' onClick={openStory}>
+                    <img className="project-media" src={almsommerImage} alt="The Almsommer title screen: four illustrated shepherds on an alpine meadow at dusk" loading="lazy" />
+                    <h3>Almsommer – Schafkopf Card Game</h3>
+                    <ul className='tag-list' aria-label="Technologies">
+                        <li>React Native</li>
+                        <li>Expo</li>
+                        <li>Game AI</li>
+                        <li>Illustration</li>
+                    </ul>
+                    <p>
+                        The traditional Bavarian card game Schafkopf, played on an alpine meadow against three computer
+                        opponents. My goal is to make my favourite card game accessible to people outside of Bavaria.
+                    </p>
+                    <p>
+                        I redesigned and illustrated the whole deck and added helpful information to the cards, and a guided
+                        game with coach tips helps beginners learn the rules – so I have more people to play with in Denmark.
+                    </p>
+                    <p className="project-status">Coming soon to Google Play</p>
+                    <div className="project-links">
+                        <button type="button" className="button button-dark">
+                            Discover the game
+                        </button>
+                        <a className="button button-outline" href={ALMSOMMER_URL} target="_blank" rel="noopener noreferrer" onClick={(event) => event.stopPropagation()}>
+                            Play in the browser
+                        </a>
+                    </div>
+                </article>
                 <article className='card specific-project'>
                     <div className="project-media project-media-logo" style={{ backgroundColor: '#ff412c' }}>
                         <img src={huskLogo} alt="Husk app logo" loading="lazy" />
@@ -34,27 +84,7 @@ function Projects() {
                     <p className="project-status">Currently in development</p>
                 </article>
 
-                <article className='card specific-project'>
-                    <video className="project-media" controls preload="none" poster={schafkopfPoster}>
-                        <source src={schafkopfVideo} type="video/mp4" />
-                        Your browser does not support video playback.
-                    </video>
-                    <h3>Schafkopf – Multiplayer Card Game</h3>
-                    <ul className='tag-list' aria-label="Technologies">
-                        <li>React</li>
-                        <li>UI Design</li>
-                        <li>Card Design</li>
-                    </ul>
-                    <p>
-                        A digital version of the traditional Bavarian card game Schafkopf, built in React. My goal is to make
-                        my favourite card game accessible to people outside of Bavaria.
-                    </p>
-                    <p>
-                        I redesigned the traditional cards and added helpful information to them, so beginners can pick up
-                        the game more easily – and I have more people to play with in Denmark.
-                    </p>
-                    <p className="project-status">Playable demo coming soon</p>
-                </article>
+
 
                 <article className='card specific-project'>
                     <img className="project-media" src={donutImage} alt="Screenshot of the game Donut Wars" loading="lazy" />
@@ -100,6 +130,8 @@ function Projects() {
                     </div>
                 </article>
             </div>
+
+            <AlmsommerStory open={storyOpen} onClose={closeStory} />
         </section>
     );
 }

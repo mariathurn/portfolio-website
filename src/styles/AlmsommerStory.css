@@ -1,0 +1,565 @@
+/* Almsommer slideshow (AlmsommerStory.tsx): linen paper and ink like the game itself */
+
+.almsommer-story {
+    --story-paper: #f6f1e4;
+    --story-ink: #1f1c19;
+    --story-muted: #5e564c;
+    --story-gold: #eec652;
+    --story-line: #ddd3bf;
+    --story-chip: #ebe3d1;
+
+    width: min(1120px, 100vw - 32px);
+    height: min(700px, 100dvh - 32px);
+    max-width: none;
+    max-height: none;
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-card);
+    background-color: var(--story-paper);
+    color: var(--story-ink);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+}
+
+:root[data-theme="dark"] .almsommer-story {
+    --story-paper: #231d33;
+    --story-ink: #f1ecf7;
+    --story-muted: #b4abc4;
+    --story-line: #3d3452;
+    --story-chip: #342b49;
+}
+
+.almsommer-story::backdrop {
+    background-color: rgba(20, 14, 30, 0.7);
+    backdrop-filter: blur(3px);
+}
+
+.almsommer-story[open] {
+    animation: story-in 0.3s ease-out;
+}
+
+@keyframes story-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+    }
+}
+
+html.has-modal {
+    overflow: hidden;
+}
+
+.story-frame {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.story-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px 0 28px;
+}
+
+.story-count {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--story-muted);
+}
+
+.story-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--story-ink);
+    background: none;
+    color: var(--story-ink);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.story-close:hover {
+    background-color: var(--story-chip);
+}
+
+
+/* Slides */
+
+.story-viewport {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.story-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.55s cubic-bezier(0.65, 0, 0.25, 1);
+}
+
+.story-slide {
+    flex: 0 0 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+    padding: 8px 40px 16px;
+    overflow-y: auto;
+}
+
+.story-slide.is-wide {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    gap: 8px;
+}
+
+.story-slide.is-wide .story-text {
+    order: -1;
+}
+
+.story-visual {
+    display: grid;
+    place-items: center;
+    min-width: 0;
+}
+
+.story-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--story-muted);
+    margin-bottom: 4px;
+}
+
+.story-text h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    line-height: 1.15;
+    margin-bottom: 16px;
+}
+
+.story-text p {
+    margin-bottom: 12px;
+}
+
+.story-text .button-dark {
+    margin-top: 4px;
+}
+
+:root[data-theme="dark"] .story-text .button-dark {
+    background-color: var(--story-ink);
+    border-color: var(--story-ink);
+    color: var(--story-paper);
+}
+
+.story-badge {
+    display: block;
+    width: fit-content;
+    margin-top: 4px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    background-color: var(--story-gold);
+    color: #1f1c19;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.story-try {
+    font-weight: 600;
+}
+
+.story-shot {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.story-mapping {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 20px;
+    margin: 0 0 14px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background-color: var(--story-chip);
+}
+
+.story-mapping dt {
+    color: var(--story-muted);
+}
+
+.story-mapping dd {
+    font-weight: 600;
+}
+
+
+/* Cards fanned out from the bottom, e.g. the four shepherds */
+
+.deck-fan {
+    position: relative;
+    width: min(100%, 460px);
+    aspect-ratio: 5 / 4;
+}
+
+.deck-fan img {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 19%);
+    width: 38%;
+    transform-origin: 50% 120%;
+    transform: rotate(calc((var(--i) - 1.5) * 14deg));
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3));
+    animation: fan-in 0.6s cubic-bezier(0.3, 1.3, 0.5, 1) backwards;
+    animation-delay: calc(var(--i) * 0.08s + 0.2s);
+}
+
+@keyframes fan-in {
+    from {
+        transform: rotate(0deg) translateY(30px);
+        opacity: 0;
+    }
+}
+
+
+/* The hand that sorts itself into trumps (TrumpHand.tsx) */
+
+.trump-hand {
+    width: 100%;
+    max-width: 560px;
+}
+
+.trump-hand-fan {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    margin-top: 24px;
+}
+
+.trump-hand-card {
+    position: absolute;
+    top: 8%;
+    width: 20%;
+    transform-origin: 50% 100%;
+    transition: left 0.7s cubic-bezier(0.65, 0, 0.25, 1), transform 0.7s cubic-bezier(0.65, 0, 0.25, 1);
+}
+
+.trump-hand-card img {
+    display: block;
+    width: 100%;
+    border-radius: 7% / 4.5%;
+    box-shadow: 0 0 0 0 transparent, 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.5s ease;
+}
+
+.trump-hand-card.is-trump img {
+    box-shadow: 0 0 0 3px var(--story-gold), 0 0 18px rgba(238, 198, 82, 0.75), 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.trump-crown {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    width: 28px;
+    height: 28px;
+    margin-left: -14px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background-color: var(--story-gold);
+    color: #1f1c19;
+    border: 2px solid #1f1c19;
+    font-size: 0.95rem;
+    line-height: 1;
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.trump-hand-card.is-trump .trump-crown {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.45s;
+}
+
+.trump-hand-games,
+.story-segments {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.trump-hand-games button,
+.story-segments button {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 2px solid var(--story-ink);
+    background: none;
+    color: var(--story-ink);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.trump-hand-games button:hover,
+.story-segments button:hover {
+    background-color: var(--story-chip);
+}
+
+.trump-hand-games button.is-selected,
+.story-segments button.is-selected {
+    background-color: var(--story-ink);
+    color: var(--story-paper);
+}
+
+.trump-hand-hint {
+    min-height: 3.2em;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--story-muted);
+}
+
+
+/* Wide screen and phone side by side */
+
+.screen-pair {
+    width: 100%;
+}
+
+.screen-pair-devices {
+    position: relative;
+    padding-right: 12%;
+    padding-bottom: 6%;
+}
+
+.screen-desktop {
+    display: block;
+    width: 100%;
+    /* The screenshots differ a little in shape; a fixed frame keeps the layout still when switching */
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 6px solid #1f1c19;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.screen-phone {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 26%;
+    border-radius: 18px;
+    border: 5px solid #1f1c19;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+
+/* The whole deck */
+
+.deck-grid {
+    display: grid;
+    gap: 14px;
+    width: 100%;
+    padding-bottom: 8px;
+}
+
+.deck-grid-row h4 {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    color: var(--story-muted);
+}
+
+.deck-grid-cards {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 8px;
+}
+
+/* Two suits per row on wide screens */
+@media (min-width: 900px) {
+    .deck-grid {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 32px;
+    }
+
+    .deck-grid-cards {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+
+.deck-grid-cards button {
+    display: block;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
+
+.deck-grid-cards button:hover {
+    transform: translateY(-6px) scale(1.06);
+}
+
+.deck-grid-cards img {
+    display: block;
+    width: 100%;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.25));
+}
+
+/* One card enlarged over the darkened slideshow */
+.card-lightbox {
+    margin: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+    cursor: zoom-out;
+}
+
+.card-lightbox::backdrop {
+    background-color: rgba(10, 6, 16, 0.8);
+}
+
+.card-lightbox[open] figure {
+    animation: card-zoom 0.3s cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+
+@keyframes card-zoom {
+    from {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+}
+
+.card-lightbox img {
+    display: block;
+    height: min(78dvh, 150vw);
+    width: auto;
+    filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.6));
+}
+
+.card-lightbox figcaption {
+    margin-top: 14px;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+
+/* Navigation */
+
+.story-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 16px 16px;
+    border-top: 1px solid var(--story-line);
+}
+
+.story-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--story-ink);
+    color: var(--story-paper);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.story-arrow:hover:not(:disabled) {
+    transform: scale(1.08);
+}
+
+.story-arrow:disabled {
+    opacity: 0.25;
+    cursor: default;
+}
+
+.story-dots {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+}
+
+.story-dots button {
+    display: block;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border-radius: 999px;
+    border: 2px solid var(--story-ink);
+    background: none;
+    cursor: pointer;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.story-dots button.is-current {
+    width: 32px;
+    background-color: var(--story-gold);
+}
+
+
+/* Phones: full screen, picture above the text */
+
+@media (max-width: 750px) {
+    .almsommer-story {
+        width: 100vw;
+        height: 100dvh;
+        border-radius: 0;
+    }
+
+    .story-header {
+        padding: 10px 12px 0 16px;
+    }
+
+    .story-slide {
+        grid-template-columns: 1fr;
+        align-items: start;
+        align-content: start;
+        gap: 20px;
+        padding: 4px 16px 16px;
+    }
+
+    .deck-fan {
+        width: min(100%, 320px);
+    }
+
+    .deck-grid-cards {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .story-nav {
+        gap: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .story-track,
+    .trump-hand-card,
+    .trump-crown,
+    .deck-fan img,
+    .card-lightbox[open] figure,
+    .almsommer-story[open] {
+        transition: none;
+        animation: none;
+    }
+}
