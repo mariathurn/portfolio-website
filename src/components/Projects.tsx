@@ -7,6 +7,9 @@ import donutImage from '../assets/donut.jpg';
 import thesisImage from '../assets/thesis-img.jpg';
 import thesisPdf from '../assets/thesis.pdf';
 import huskLogo from '../assets/husk-logo.png';
+import huskHomeLight from '../assets/husk/home-en-light.webp';
+import huskHomeDark from '../assets/husk/home-en-dark.webp';
+import huskGrammarGerman from '../assets/husk/grammar-answer-de-light.webp';
 
 // Projects with a slideshow; each also opens from a link to #<id>.
 const stories = ['almsommer', 'husk'] as const;
@@ -41,6 +44,7 @@ function Projects() {
                 <article className='card specific-project is-clickable' onClick={() => showStory('almsommer')}>
                     <img className="project-media" src={almsommerImage} alt="The Almsommer title screen: four illustrated shepherds on an alpine meadow at dusk" loading="lazy" />
                     <h3>Almsommer – Schafkopf Card Game</h3>
+                    <p className="project-role">Solo project: concept, illustration, design and code</p>
                     <ul className='tag-list' aria-label="Technologies">
                         <li>React Native</li>
                         <li>Expo</li>
@@ -66,10 +70,16 @@ function Projects() {
                     </div>
                 </article>
                 <article className='card specific-project is-clickable' onClick={() => showStory('husk')}>
-                    <div className="project-media project-media-logo" style={{ backgroundColor: '#ff412c' }}>
-                        <img src={huskLogo} alt="Husk app logo" loading="lazy" />
+                    <div className="project-media husk-cover" role="img" aria-label="The Husk logo next to three screenshots of the app: dark mode, light mode in English, and a grammar drill in German">
+                        <img className="husk-cover-logo" src={huskLogo} alt="" loading="lazy" />
+                        <div className="husk-cover-phones">
+                            <img src={huskHomeDark} alt="" loading="lazy" />
+                            <img src={huskHomeLight} alt="" loading="lazy" />
+                            <img src={huskGrammarGerman} alt="" loading="lazy" />
+                        </div>
                     </div>
                     <h3>Husk – Danish Learning App</h3>
+                    <p className="project-role">Solo project: concept, design and code</p>
                     <ul className='tag-list' aria-label="Technologies">
                         <li>React Native</li>
                         <li>Expo</li>

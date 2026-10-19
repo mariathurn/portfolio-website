@@ -3,7 +3,9 @@ import { BANNER_DONE_EVENT } from '../events';
 
 type Theme = 'light' | 'dark';
 
+const THEME_KEY = 'theme';
 const HINT_SEEN_KEY = 'lever-hint-seen';
+const DEVICE_DARK = '(prefers-color-scheme: dark)';
 const HINT_MS = 3000;
 
 const readStorage = (key: string) => {
@@ -22,7 +24,8 @@ const writeStorage = (key: string, value: string) => {
     }
 };
 
-// index.html sets data-theme before React loads, so there is no flash of the wrong theme
+// index.html sets data-theme before React loads (saved choice, else the device setting),
+// so there is no flash of the wrong theme
 const getInitialTheme = (): Theme =>
     document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
 
@@ -33,16 +36,25 @@ function ThemeLever() {
 
     useEffect(() => {
         document.documentElement.dataset.theme = theme;
-        writeStorage('theme', theme);
     }, [theme]);
+
+    // Until the visitor picks a theme with the lever, follow the device when it switches
+    useEffect(() => {
+        const query = window.matchMedia(DEVICE_DARK);
+        const onChange = () => {
+            if (!readStorage(THEME_KEY)) setTheme(query.matches ? 'dark' : 'light');
+        };
+        query.addEventListener('change', onChange);
+        return () => query.removeEventListener('change', onChange);
+    }, []);
 
     // After the banner intro, wiggle once and show a hint – only on a visitor's first visit
     useEffect(() => {
         let hideTimer: ReturnType<typeof setTimeout>;
 
         const onBannerDone = () => {
-            // Skip if already seen, or if the visitor already found night mode
-            if (readStorage(HINT_SEEN_KEY) || document.documentElement.dataset.theme === 'dark') return;
+            // Skip if already seen, or if the visitor already used the lever
+            if (readStorage(HINT_SEEN_KEY) || readStorage(THEME_KEY)) return;
             writeStorage(HINT_SEEN_KEY, 'true');
             setShowHint(true);
             hideTimer = setTimeout(() => setShowHint(false), HINT_MS);
@@ -55,8 +67,11 @@ function ThemeLever() {
         };
     }, []);
 
+    // Only a choice made with the lever is remembered; it then wins over the device setting
     const toggleTheme = () => {
-        setTheme(isDark ? 'light' : 'dark');
+        const next = isDark ? 'light' : 'dark';
+        setTheme(next);
+        writeStorage(THEME_KEY, next);
         setShowHint(false);
     };
 
@@ -80,7 +95,8 @@ function ThemeLever() {
             </button>
             {showHint && (
                 <p className="theme-lever-hint" role="status">
-                    <span aria-hidden="true">🌙</span>
+                    {/* Points to the other theme: a moon by day, a sun by night */}
+                    <span aria-hidden="true">{isDark ? '☀️' : '🌙'}</span>
                 </p>
             )}
         </div>

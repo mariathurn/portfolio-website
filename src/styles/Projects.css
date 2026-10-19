@@ -37,16 +37,60 @@
     margin-bottom: 20px;
 }
 
-/* Logo on a coloured background instead of a screenshot */
-.project-media-logo {
-    display: grid;
-    place-items: center;
+/* Husk: the logo next to three phones; sizes follow the card's width (cqw) */
+.husk-cover {
+    container-type: inline-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5cqw;
+    overflow: hidden;
+    background: radial-gradient(circle at 70% 40%, #ffffff, #f1efec 70%);
 }
 
-.project-media-logo img {
-    width: 62%;
-    height: 100%;
-    object-fit: contain;
+.husk-cover-logo {
+    flex: none;
+    width: 22cqw;
+    border-radius: 5cqw;
+    box-shadow: 0 2cqw 5cqw rgba(255, 65, 44, 0.3);
+}
+
+.husk-cover-phones {
+    display: flex;
+    align-items: center;
+}
+
+.husk-cover-phones img {
+    flex: none;
+    height: 44cqw;
+    width: auto;
+    aspect-ratio: 739 / 1600;
+    border-radius: 3.6cqw;
+    border: 1.1cqw solid #15171f;
+    background-color: #15171f;
+    box-shadow: 0 2cqw 5cqw rgba(0, 0, 0, 0.22);
+}
+
+.husk-cover-phones img:nth-child(1) {
+    margin-right: -5cqw;
+    transform: rotate(-7deg) translateY(3cqw);
+}
+
+.husk-cover-phones img:nth-child(2) {
+    position: relative;
+    z-index: 1;
+}
+
+.husk-cover-phones img:nth-child(3) {
+    margin-left: -5cqw;
+    transform: rotate(7deg) translateY(3cqw);
+}
+
+.project-role {
+    margin: -6px 0 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
 }
 
 .project-status {

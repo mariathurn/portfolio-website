@@ -166,6 +166,7 @@
 .about-lead {
     width: fit-content;
     max-width: 100%;
+    text-wrap: pretty;
     padding: 20px 28px;
     font-family: var(--font-mono);
     font-size: 1.4rem;
@@ -240,6 +241,10 @@
     list-style: none;
 }
 
+.about-links {
+    margin-top: 10px;
+}
+
 .about-facts li {
     font-size: 0.9rem;
     font-weight: 500;
@@ -249,22 +254,24 @@
     background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* CV link as one of the chips: same size, but filled so it reads as clickable */
-.about-facts li:has(.cv-chip) {
+/* GitHub and CV links as chips: same size, but filled so they read as clickable */
+.about-facts li:has(.link-chip) {
     padding: 0;
     border-color: var(--color-white);
     background-color: var(--color-white);
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.cv-chip {
-    display: block;
+.link-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     padding: 6px 14px;
     color: var(--color-green);
     font-weight: 600;
 }
 
-.about-facts li:has(.cv-chip):hover {
+.about-facts li:has(.link-chip):hover {
     border-color: var(--color-yellow);
     background-color: var(--color-yellow);
 }

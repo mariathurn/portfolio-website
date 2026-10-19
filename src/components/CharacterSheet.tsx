@@ -5,9 +5,7 @@ import PixelPortrait from './PixelPortrait';
 const details = [
     { label: 'Class', value: 'Software Developer' },
     { label: 'Subclass', value: 'Tech Wizard' },
-    { label: 'Level', value: '34' },
-    { label: 'Origin', value: 'Bavaria → Copenhagen' },
-    { label: 'Alignment', value: 'Neutral Creative' },
+    { label: 'Origin', value: 'Bavaria' },
 ];
 
 const abilities = [
@@ -20,7 +18,7 @@ const abilities = [
 ];
 
 const traits = [
-    { label: 'Personality', text: 'Can be stuborn, while finishing a goal. Might require frequent focus potions.' },
+    { label: 'Personality', text: 'Can be stubborn while finishing a goal. Might require frequent focus potions.' },
     { label: 'Ideal', text: 'Beauty. Interfaces should be both beautiful and easy to use.' },
     { label: 'Bond', text: 'Loves her 1000 different hobbies and her 2 cats.' },
     { label: 'Flaw', text: 'Will notice your kerning.' },

@@ -12,11 +12,12 @@
     content="Software engineer in Copenhagen with a design background. I build web apps and interactive experiences with React, TypeScript and Unity.">
   <meta name="theme-color" content="#2E653D">
 
-  <!-- Apply saved dark mode before the page renders (see ThemeLever.tsx) -->
+  <!-- Apply the theme before the page renders: a saved choice, else the device setting (see ThemeLever.tsx) -->
   <script>
-    try {
-      if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
-    } catch (e) { }
+    var theme = null;
+    try { theme = localStorage.getItem('theme'); } catch (e) { }
+    if (theme !== 'light' && theme !== 'dark') theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.dataset.theme = theme;
   </script>
 
   <!-- Umami analytics (cookieless); data-domains keeps local dev visits out of the stats -->

@@ -1,4 +1,5 @@
 import '../styles/Contact.css';
+import { GITHUB_URL } from '../links';
 
 function Contact() {
     return (
@@ -10,6 +11,7 @@ function Contact() {
                 <div className='contact-ways'>
                     <a className="button button-primary" href="mailto:mail@mariathurn.de">Email me</a>
                     <a className="button button-secondary" href="https://www.linkedin.com/in/maria-thurn-134421142/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a className="button button-secondary" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>
             </div>
             <footer className='contact-footer'>
