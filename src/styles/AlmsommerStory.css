@@ -246,6 +246,32 @@
     cursor: zoom-out;
 }
 
+.card-lightbox[open] {
+    display: flex;
+    align-items: center;
+    gap: clamp(4px, 2vw, 24px);
+}
+
+.card-lightbox-arrow {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 64px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.card-lightbox-arrow:hover,
+.card-lightbox-arrow:focus-visible {
+    color: #fff;
+    transform: scale(1.15);
+}
+
 .card-lightbox::backdrop {
     background-color: rgba(10, 6, 16, 0.8);
 }
@@ -263,7 +289,7 @@
 
 .card-lightbox img {
     display: block;
-    height: min(78dvh, 150vw);
+    height: min(78dvh, 120vw);
     width: auto;
     filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.6));
 }
@@ -274,6 +300,12 @@
     color: #fff;
     font-weight: 600;
     text-transform: capitalize;
+}
+
+.card-lightbox figcaption span {
+    margin-left: 8px;
+    font-weight: 400;
+    opacity: 0.6;
 }
 
 

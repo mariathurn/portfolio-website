@@ -11,6 +11,15 @@ export type Slide = {
     wide?: boolean;
 };
 
+// Drawn instead of a text glyph so it sits exactly in the middle of its button.
+export function Chevron({ direction, size = 18 }: { direction: 'left' | 'right'; size?: number }) {
+    return (
+        <svg viewBox="0 0 16 16" width={size} height={size} aria-hidden="true">
+            <path d={direction === 'left' ? 'M10 3L5 8l5 5' : 'M6 3l5 5-5 5'} fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    );
+}
+
 type Props = {
     open: boolean;
     onClose: () => void;
@@ -73,7 +82,9 @@ function ProjectStory({ open, onClose, title, className, slides }: Props) {
                     <span className="story-count">{index + 1} / {slides.length}</span>
                     <h2 id={titleId} className="visually-hidden">{title}</h2>
                     <button type="button" className="story-close" aria-label="Close" onClick={() => dialogRef.current?.close()}>
-                        ×
+                        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+                            <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                        </svg>
                     </button>
                 </header>
 
@@ -111,7 +122,7 @@ function ProjectStory({ open, onClose, title, className, slides }: Props) {
 
                 <nav className="story-nav" aria-label="Slides">
                     <button type="button" className="story-arrow" onClick={() => go(index - 1)} disabled={index === 0} aria-label="Previous slide">
-                        ‹
+                        <Chevron direction="left" />
                     </button>
                     <ol className="story-dots">
                         {slides.map((slide, i) => (
@@ -128,7 +139,7 @@ function ProjectStory({ open, onClose, title, className, slides }: Props) {
                         ))}
                     </ol>
                     <button type="button" className="story-arrow" onClick={() => go(index + 1)} disabled={index === slides.length - 1} aria-label="Next slide">
-                        ›
+                        <Chevron direction="right" />
                     </button>
                 </nav>
             </div>

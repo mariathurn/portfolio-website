@@ -1,6 +1,6 @@
-import { useRef, useState, type CSSProperties } from 'react';
+import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import '../styles/AlmsommerStory.css';
-import ProjectStory, { type Slide } from './ProjectStory';
+import ProjectStory, { Chevron, type Slide } from './ProjectStory';
 import TrumpHand from './TrumpHand';
 import { cardImage, motifs, ranksInDeckOrder, suitNames, suitsStrongestFirst, type Card } from '../data/almsommerCards';
 import menuLandscape from '../assets/almsommer/menu-landscape.webp';
@@ -38,25 +38,37 @@ function ScreenPair() {
     );
 }
 
-// All 24 cards; a click shows one large over a darkened background.
+const deck: Card[] = suitsStrongestFirst.flatMap((suit) => ranksInDeckOrder.map((rank) => ({ suit, rank })));
+
+// All 24 cards; a click shows one large over a darkened background, with arrows to page through the deck.
 function DeckGrid({ active }: { active: boolean }) {
     const lightboxRef = useRef<HTMLDialogElement>(null);
-    const [selected, setSelected] = useState<Card | null>(null);
+    const [selected, setSelected] = useState<number | null>(null);
     const name = (card: Card) => `${motifs[card.rank]}, ${suitNames[card.suit].split(' ·')[0].toLowerCase()}`;
 
-    const show = (card: Card) => {
-        setSelected(card);
+    const show = (i: number) => {
+        setSelected(i);
         lightboxRef.current?.showModal();
     };
 
+    // Wraps around, so the last card leads back to the first.
+    const step = (delta: number) => setSelected((i) => (i === null ? i : (i + delta + deck.length) % deck.length));
+
+    const onKeyDown = (event: KeyboardEvent<HTMLDialogElement>) => {
+        if (event.key === 'ArrowRight') step(1);
+        if (event.key === 'ArrowLeft') step(-1);
+    };
+
+    const card = selected === null ? null : deck[selected];
+
     return (
         <div className="deck-grid">
-            {suitsStrongestFirst.map((suit) => (
+            {suitsStrongestFirst.map((suit, row) => (
                 <div key={suit} className="deck-grid-row">
                     <h4>{suitNames[suit]}</h4>
                     <div className="deck-grid-cards">
-                        {ranksInDeckOrder.map((rank) => (
-                            <button key={rank} type="button" aria-label={`Enlarge ${name({ suit, rank })}`} onClick={() => show({ suit, rank })}>
+                        {ranksInDeckOrder.map((rank, col) => (
+                            <button key={rank} type="button" aria-label={`Enlarge ${name({ suit, rank })}`} onClick={() => show(row * ranksInDeckOrder.length + col)}>
                                 <img src={cardImage({ suit, rank })} alt="" loading={active ? 'eager' : 'lazy'} />
                             </button>
                         ))}
@@ -65,12 +77,22 @@ function DeckGrid({ active }: { active: boolean }) {
             ))}
 
             {/* A nested modal dialog: Esc closes only the card, not the slideshow. */}
-            <dialog ref={lightboxRef} className="card-lightbox" onClick={() => lightboxRef.current?.close()} onClose={() => setSelected(null)}>
-                {selected ? (
-                    <figure>
-                        <img src={cardImage(selected)} alt={name(selected)} />
-                        <figcaption>{name(selected)}</figcaption>
-                    </figure>
+            <dialog ref={lightboxRef} className="card-lightbox" onClick={() => lightboxRef.current?.close()} onClose={() => setSelected(null)} onKeyDown={onKeyDown}>
+                {card ? (
+                    <>
+                        <button type="button" className="card-lightbox-arrow" aria-label="Previous card" onClick={(e) => { e.stopPropagation(); step(-1); }}>
+                            <Chevron direction="left" size={32} />
+                        </button>
+                        <figure>
+                            <img src={cardImage(card)} alt={name(card)} />
+                            <figcaption>
+                                {name(card)} <span>{selected! + 1} / {deck.length}</span>
+                            </figcaption>
+                        </figure>
+                        <button type="button" className="card-lightbox-arrow" aria-label="Next card" onClick={(e) => { e.stopPropagation(); step(1); }}>
+                            <Chevron direction="right" size={32} />
+                        </button>
+                    </>
                 ) : null}
             </dialog>
         </div>
@@ -172,7 +194,7 @@ const slides: Slide[] = [
     },
     {
         kicker: 'Computer players',
-        title: 'Opponents that think',
+        title: 'Smart Opponents',
         visual: () => <img className="story-shot" src={choiceLandscape} alt="The game picker with Sheep Game, Solo, Dog Game and Marriage" loading="lazy" />,
         text: (
             <>
