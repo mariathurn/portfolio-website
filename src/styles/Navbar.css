@@ -83,7 +83,7 @@
   transform: rotate(35deg);
 }
 
-/* First-visit hint after the banner intro (see ThemeLever.tsx) */
+/* First-visit hint shortly after the page loads (see ThemeLever.tsx) */
 .theme-lever-wrap {
   position: relative;
 }

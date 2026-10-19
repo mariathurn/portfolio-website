@@ -33,7 +33,7 @@
 .sheet-label {
     display: block;
     font-family: var(--font-display);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--sheet-muted);
@@ -61,7 +61,7 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    width: 96px;
+    width: 120px;
     aspect-ratio: 1;
     overflow: hidden;
     border: 2px solid var(--sheet-line);
@@ -95,6 +95,7 @@
 }
 
 .sheet-details dd {
+    font-size: 1.1rem;
     font-weight: 500;
     border-bottom: 1px solid var(--sheet-line);
     padding-bottom: 4px;
@@ -103,10 +104,11 @@
 
 /* Body */
 
+/* Abilities across the full width, traits and quest log side by side below */
 .sheet-body {
-    display: grid;
-    grid-template-columns: 2fr 2fr;
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     margin-top: 24px;
 }
 
@@ -115,19 +117,16 @@
 
 .sheet-abilities {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    /* Equal row heights that stretch to match the traits/inventory column */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-auto-rows: 1fr;
     gap: 16px;
 }
 
 .ability {
-    position: relative;
+    --ability-bar-bg: color-mix(in srgb, var(--ability-color) 18%, transparent);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 14px 10px 12px;
+    padding: 16px 18px;
     border: 2px solid var(--sheet-line);
     border-radius: 14px;
     background-color: var(--sheet-box);
@@ -138,36 +137,62 @@
     transform: rotate(-1.5deg) scale(1.03);
 }
 
+.ability-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
 .ability-name {
-    font-size: 0.85rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .ability-score {
     font-family: var(--font-display);
     font-size: 2rem;
-    line-height: 1.2;
-    margin-top: 4px;
+    line-height: 1;
+    color: var(--ability-color);
+    white-space: nowrap;
+}
+
+.ability-max {
+    font-size: 0.85rem;
+    color: var(--sheet-muted);
+}
+
+/* Fills to score / 20 when the page loads */
+.ability-bar {
+    height: 10px;
+    margin-top: 10px;
+    border-radius: 999px;
+    background: linear-gradient(var(--ability-color), var(--ability-color)) 0 0 / calc(var(--ability-fill) * 100%) 100% no-repeat,
+        var(--ability-bar-bg);
+    animation: ability-fill 1s cubic-bezier(0.3, 0.9, 0.4, 1) 0.3s both;
+}
+
+@keyframes ability-fill {
+    from {
+        background-size: 0 100%, auto;
+    }
 }
 
 .ability-note {
-    margin-top: 10px;
-    font-size: 0.85rem;
-    line-height: 1.35;
-    color: var(--sheet-muted);
+    margin-top: 12px;
+    font-size: 1rem;
+    line-height: 1.4;
 }
 
 
 /* Side boxes */
 
 .sheet-side {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
-}
-
-/* Inventory grows so both columns end on the same line */
-.sheet-side .sheet-box:last-child {
-    flex: 1;
 }
 
 .sheet-box {
@@ -179,7 +204,7 @@
 
 .sheet-box-title {
     font-family: var(--font-display);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -188,36 +213,113 @@
 .sheet-traits {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .sheet-traits dd {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 1.4;
 }
 
-.sheet-inventory {
+.sheet-quests {
     list-style: none;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 1.4;
 }
 
-.sheet-inventory li {
-    padding: 4px 0;
+.sheet-quests li {
+    padding: 6px 0;
     border-bottom: 1px dashed var(--sheet-muted);
 }
 
-.sheet-inventory li:last-child {
+.sheet-quests li:last-child {
     border-bottom: none;
 }
 
-.sheet-inventory li::before {
-    content: '◆ ';
-    color: var(--color-purple);
+.sheet-quests label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+/* The real checkbox is hidden; this box shows its state */
+.quest-mark {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--sheet-line);
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.sheet-quests label:has(input:checked) {
+    cursor: default;
+}
+
+.sheet-quests label:hover input:not(:checked) + .quest-mark {
+    transform: scale(1.1);
+}
+
+.sheet-quests input:focus-visible + .quest-mark {
+    outline: 2px solid var(--color-purple);
+    outline-offset: 2px;
+}
+
+.sheet-quests label:has(input:checked) {
+    color: var(--sheet-muted);
+}
+
+.sheet-quests input:checked + .quest-mark {
+    border-color: #3c9a5a;
+    background-color: #3c9a5a;
+    color: #fff;
+}
+
+/* "All done!" pops up in the top corner once every quest is ticked */
+.sheet-quest-box {
+    position: relative;
+}
+
+.quest-done span {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background-color: #3c9a5a;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0 var(--sheet-line);
+    animation: quest-pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+@keyframes quest-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.3) rotate(-12deg);
+    }
+
+    to {
+        transform: rotate(4deg);
+    }
 }
 
 @media (max-width: 900px) {
-    .sheet-body {
+    .sheet-abilities {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sheet-side {
         grid-template-columns: 1fr;
     }
 
@@ -232,7 +334,7 @@
 
 @media (max-width: 750px) {
     .sheet-portrait {
-        width: 72px;
+        width: 88px;
     }
 
     .sheet-details {
@@ -247,5 +349,12 @@
     .sheet-abilities {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ability-bar,
+    .quest-done span {
+        animation: none;
     }
 }

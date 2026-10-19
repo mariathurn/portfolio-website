@@ -22,7 +22,6 @@ library, no runtime dependencies besides React.
   pixel portrait drawn from a sprite map.
 - **Light and dark mode** – follows the device setting until the visitor flips the lever in the navbar.
   The theme is applied before React loads, so there is no flash of the wrong colours.
-- **First-visit intro** – a short banner animation with Nyan Cat plays once, then never again.
 - **Accessible** – semantic headings and landmarks, labelled controls, native `<dialog>` for modals
   (focus handling and Esc for free), keyboard support throughout and `prefers-reduced-motion` respected.
 - **Responsive** – layouts adapt from phone to wide screens; the navbar colour follows the section in

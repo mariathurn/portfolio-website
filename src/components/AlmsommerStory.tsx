@@ -112,8 +112,9 @@ const slides: Slide[] = [
                     rules.
                 </p>
                 <p>
-                    It's my favourite card game, and I wanted to make it easier for people outside Bavaria to learn – so
-                    I have more people to play with in Denmark.
+                    It's my favourite card game, and I wanted to make it easier for people outside Bavaria to learn. I
+                    made Almsommer entirely on my own: I wrote all of the code, illustrated every card and figure, and
+                    designed the whole interface.
                 </p>
                 <p className="story-badge">Coming soon to Google Play</p>
                 <a className="button button-dark" href={ALMSOMMER_URL} target="_blank" rel="noopener noreferrer">

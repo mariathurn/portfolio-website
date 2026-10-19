@@ -127,6 +127,13 @@
     background-color: var(--color-tag-bg);
 }
 
+/* Text with a leading icon, e.g. GitHub */
+.button-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .project-links button.button {
     cursor: pointer;
 }

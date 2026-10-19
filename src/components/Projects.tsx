@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import '../styles/Projects.css';
 import AlmsommerStory, { ALMSOMMER_URL } from './AlmsommerStory';
 import HuskStory from './HuskStory';
+import GithubIcon from './GithubIcon';
+import { ALMSOMMER_REPO_URL } from '../links';
 import almsommerImage from '../assets/almsommer.jpg';
 import donutImage from '../assets/donut.jpg';
 import thesisImage from '../assets/thesis-img.jpg';
@@ -56,8 +58,9 @@ function Projects() {
                         opponents. My goal is to make my favourite card game accessible to people outside of Bavaria.
                     </p>
                     <p>
-                        I redesigned and illustrated the whole deck and added helpful information to the cards, and a guided
-                        game with coach tips helps beginners learn the rules – so I have more people to play with in Denmark.
+                        I made it entirely on my own: I wrote all of the code – the rules engine, the computer opponents and
+                        the app for three platforms – illustrated the whole deck and every figure, and designed every screen.
+                        A guided game with coach tips helps beginners learn the rules.
                     </p>
                     <p className="project-status">Coming soon to Google Play</p>
                     <div className="project-links">
@@ -66,6 +69,9 @@ function Projects() {
                         </button>
                         <a className="button button-outline" href={ALMSOMMER_URL} target="_blank" rel="noopener noreferrer" onClick={(event) => event.stopPropagation()}>
                             Play in the browser
+                        </a>
+                        <a className="button button-outline button-icon" href={ALMSOMMER_REPO_URL} target="_blank" rel="noopener noreferrer" onClick={(event) => event.stopPropagation()}>
+                            <GithubIcon /> GitHub
                         </a>
                     </div>
                 </article>

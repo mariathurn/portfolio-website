@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { BANNER_DONE_EVENT } from '../events';
 
 type Theme = 'light' | 'dark';
 
@@ -7,6 +6,7 @@ const THEME_KEY = 'theme';
 const HINT_SEEN_KEY = 'lever-hint-seen';
 const DEVICE_DARK = '(prefers-color-scheme: dark)';
 const HINT_MS = 3000;
+const HINT_DELAY_MS = 1200;
 
 const readStorage = (key: string) => {
     try {
@@ -48,11 +48,11 @@ function ThemeLever() {
         return () => query.removeEventListener('change', onChange);
     }, []);
 
-    // After the banner intro, wiggle once and show a hint – only on a visitor's first visit
+    // Shortly after the page loads, wiggle once and show a hint – only on a visitor's first visit
     useEffect(() => {
         let hideTimer: ReturnType<typeof setTimeout>;
 
-        const onBannerDone = () => {
+        const showOnce = () => {
             // Skip if already seen, or if the visitor already used the lever
             if (readStorage(HINT_SEEN_KEY) || readStorage(THEME_KEY)) return;
             writeStorage(HINT_SEEN_KEY, 'true');
@@ -60,9 +60,9 @@ function ThemeLever() {
             hideTimer = setTimeout(() => setShowHint(false), HINT_MS);
         };
 
-        window.addEventListener(BANNER_DONE_EVENT, onBannerDone);
+        const showTimer = setTimeout(showOnce, HINT_DELAY_MS);
         return () => {
-            window.removeEventListener(BANNER_DONE_EVENT, onBannerDone);
+            clearTimeout(showTimer);
             clearTimeout(hideTimer);
         };
     }, []);
