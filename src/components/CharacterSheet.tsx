@@ -14,15 +14,12 @@ const abilities = [
     { name: 'Design Eye', score: 18, color: '#d9584a', note: 'Spots a misaligned pixel from across the room' },
     { name: 'Code', score: 15, color: '#3b82b0', note: 'React, TypeScript and React Native – no spell scrolls needed' },
     { name: 'Curiosity', score: 17, color: '#8a6bd1', note: 'From graphic design to transformer models' },
-    { name: 'Debugging', score: 14, color: '#3c9a5a', note: '+2 when armed with AI pet' },
     { name: 'Teamwork', score: 16, color: '#d4951c', note: 'Speaks fluent Designer and Developer' },
-    { name: 'Card Games', score: 20, color: '#c4528a', note: 'Natural 20. Will teach you.' },
 ];
 
 const traits = [
     { label: 'Personality', text: 'Turns “wouldn’t it be cool if…” into a working prototype by the weekend.' },
     { label: 'Ideal', text: 'Make it work, make it clear, then make it beautiful.' },
-    { label: 'Bond', text: 'Two cats, too many hobbies, never enough time.' },
     { label: 'Flaw', text: 'No flaws.' },
 ];
 
@@ -31,9 +28,6 @@ const quests: { text: ReactNode; done: boolean }[] = [
     { text: 'MSc in IT & Cognition', done: true },
     { text: 'Illustrate a whole deck of cards', done: true },
     { text: 'Join a team in Copenhagen', done: false },
-    { text: 'Ship Almsommer to Google Play', done: false },
-    { text: 'Release Husk for Android and iOS', done: false },
-    { text: 'Learn Danish, ét ord ad gangen', done: false },
 ];
 
 function CharacterSheet() {

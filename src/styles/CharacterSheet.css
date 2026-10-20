@@ -117,7 +117,7 @@
 
 .sheet-abilities {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 1fr;
     gap: 16px;
 }
@@ -140,8 +140,9 @@
 .ability-head {
     display: flex;
     align-items: baseline;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 8px;
+    gap: 4px 8px;
 }
 
 .ability-name {
@@ -315,10 +316,6 @@
 }
 
 @media (max-width: 900px) {
-    .sheet-abilities {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .sheet-side {
         grid-template-columns: 1fr;
     }
@@ -347,8 +344,15 @@
     }
 
     .sheet-abilities {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
+    }
+}
+
+/* Phones: one ability per row so the name and score fit side by side */
+@media (max-width: 540px) {
+    .sheet-abilities {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
     }
 }
 

@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Theme = 'light' | 'dark';
 
-const THEME_KEY = 'theme';
 const HINT_SEEN_KEY = 'lever-hint-seen';
 const DEVICE_DARK = '(prefers-color-scheme: dark)';
 const HINT_MS = 3000;
@@ -24,7 +23,7 @@ const writeStorage = (key: string, value: string) => {
     }
 };
 
-// index.html sets data-theme before React loads (saved choice, else the device setting),
+// index.html sets data-theme from the device setting before React loads,
 // so there is no flash of the wrong theme
 const getInitialTheme = (): Theme =>
     document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
@@ -32,17 +31,19 @@ const getInitialTheme = (): Theme =>
 function ThemeLever() {
     const [theme, setTheme] = useState<Theme>(getInitialTheme);
     const [showHint, setShowHint] = useState(false);
+    // Set once the visitor uses the lever; from then on the device setting is ignored until the next visit
+    const pickedByLever = useRef(false);
     const isDark = theme === 'dark';
 
     useEffect(() => {
         document.documentElement.dataset.theme = theme;
     }, [theme]);
 
-    // Until the visitor picks a theme with the lever, follow the device when it switches
+    // Until the visitor uses the lever, follow the device when it switches
     useEffect(() => {
         const query = window.matchMedia(DEVICE_DARK);
         const onChange = () => {
-            if (!readStorage(THEME_KEY)) setTheme(query.matches ? 'dark' : 'light');
+            if (!pickedByLever.current) setTheme(query.matches ? 'dark' : 'light');
         };
         query.addEventListener('change', onChange);
         return () => query.removeEventListener('change', onChange);
@@ -54,7 +55,7 @@ function ThemeLever() {
 
         const showOnce = () => {
             // Skip if already seen, or if the visitor already used the lever
-            if (readStorage(HINT_SEEN_KEY) || readStorage(THEME_KEY)) return;
+            if (readStorage(HINT_SEEN_KEY) || pickedByLever.current) return;
             writeStorage(HINT_SEEN_KEY, 'true');
             setShowHint(true);
             hideTimer = setTimeout(() => setShowHint(false), HINT_MS);
@@ -67,11 +68,10 @@ function ThemeLever() {
         };
     }, []);
 
-    // Only a choice made with the lever is remembered; it then wins over the device setting
+    // The lever's choice lasts for this visit only – every new visit starts with the device setting
     const toggleTheme = () => {
-        const next = isDark ? 'light' : 'dark';
-        setTheme(next);
-        writeStorage(THEME_KEY, next);
+        pickedByLever.current = true;
+        setTheme(isDark ? 'light' : 'dark');
         setShowHint(false);
     };
 
