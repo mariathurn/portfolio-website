@@ -45,66 +45,6 @@
 }
 
 
-/* The hand that sorts itself into trumps (TrumpHand.tsx) */
-
-.trump-hand {
-    width: 100%;
-    max-width: 560px;
-}
-
-.trump-hand-fan {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    margin-top: 24px;
-}
-
-.trump-hand-card {
-    position: absolute;
-    top: 8%;
-    width: 20%;
-    transform-origin: 50% 100%;
-    transition: left 0.7s cubic-bezier(0.65, 0, 0.25, 1), transform 0.7s cubic-bezier(0.65, 0, 0.25, 1);
-}
-
-.trump-hand-card img {
-    display: block;
-    width: 100%;
-    border-radius: 7% / 4.5%;
-    box-shadow: 0 0 0 0 transparent, 0 6px 12px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.5s ease;
-}
-
-.trump-hand-card.is-trump img {
-    box-shadow: 0 0 0 3px var(--story-gold), 0 0 18px rgba(238, 198, 82, 0.75), 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-.trump-crown {
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    width: 28px;
-    height: 28px;
-    margin-left: -14px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background-color: var(--story-gold);
-    color: #1f1c19;
-    border: 2px solid #1f1c19;
-    font-size: 0.95rem;
-    line-height: 1;
-    opacity: 0;
-    transform: scale(0.4);
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.3, 1.5, 0.5, 1);
-}
-
-.trump-hand-card.is-trump .trump-crown {
-    opacity: 1;
-    transform: scale(1);
-    transition-delay: 0.45s;
-}
-
-.trump-hand-games,
 .story-segments {
     display: flex;
     flex-wrap: wrap;
@@ -113,12 +53,12 @@
     margin-top: 20px;
 }
 
-.trump-hand-games button,
 .story-segments button {
-    font-family: var(--font-body);
+    font-family: var(--font-sans);
     font-size: 0.9rem;
     font-weight: 500;
-    padding: 6px 14px;
+    min-height: var(--touch-min);
+    padding: 6px 16px;
     border-radius: 999px;
     border: 2px solid var(--story-ink);
     background: none;
@@ -127,25 +67,14 @@
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.trump-hand-games button:hover,
 .story-segments button:hover {
     background-color: var(--story-chip);
 }
 
-.trump-hand-games button.is-selected,
 .story-segments button.is-selected {
     background-color: var(--story-ink);
     color: var(--story-paper);
 }
-
-.trump-hand-hint {
-    min-height: 3.2em;
-    margin-top: 10px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--story-muted);
-}
-
 
 /* Wide screen and phone side by side */
 
@@ -321,8 +250,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .trump-hand-card,
-    .trump-crown,
     .deck-fan img,
     .card-lightbox[open] figure {
         transition: none;

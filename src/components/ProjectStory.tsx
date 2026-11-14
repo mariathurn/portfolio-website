@@ -24,7 +24,7 @@ type Props = {
     open: boolean;
     onClose: () => void;
     title: string;
-    // Sets the --story-* colours (e.g. almsommer-story)
+    // Sets the --story-* colours (e.g. husk-story)
     className: string;
     slides: Slide[];
 };

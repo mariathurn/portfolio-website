@@ -1,7 +1,6 @@
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import '../styles/AlmsommerStory.css';
 import ProjectStory, { Chevron, type Slide } from './ProjectStory';
-import TrumpHand from './TrumpHand';
 import { cardImage, motifs, ranksInDeckOrder, suitNames, suitsStrongestFirst, type Card } from '../data/almsommerCards';
 import menuLandscape from '../assets/almsommer/menu-landscape.webp';
 import gameLandscape from '../assets/almsommer/game-landscape.webp';
@@ -9,8 +8,6 @@ import choiceLandscape from '../assets/almsommer/game-choice-landscape.webp';
 import menuPortrait from '../assets/almsommer/menu-portrait.webp';
 import gamePortrait from '../assets/almsommer/game-portrait.webp';
 import choicePortrait from '../assets/almsommer/game-choice-portrait.webp';
-
-export const ALMSOMMER_URL = 'https://almsommer.mariathurn.de/';
 
 const screens = [
     { label: 'Title screen', landscape: menuLandscape, portrait: menuPortrait },
@@ -101,25 +98,20 @@ function DeckGrid({ active }: { active: boolean }) {
 
 const slides: Slide[] = [
     {
-        kicker: 'Schafkopf on an alpine meadow',
+        kicker: 'Illustration & responsive design',
         title: 'Almsommer',
         visual: () => <img className="story-shot" src={menuLandscape} alt="The Almsommer title screen: four illustrated shepherds on a meadow at dusk" />,
         text: (
             <>
                 <p>
-                    Almsommer is the Bavarian card game Schafkopf as an app for Android, iOS and the web. You play against
-                    three computer opponents, and a guided first game and practice rounds help new players learn the
-                    rules.
+                    Almsommer was my first version of the Bavarian card game Schafkopf: an app for Android, iOS and the
+                    web where you play three computer opponents on an alpine meadow.
                 </p>
                 <p>
-                    It's my favourite card game, and I wanted to make it easier for people outside Bavaria to learn. I
-                    made Almsommer entirely on my own: I wrote all of the code, illustrated every card and figure, and
-                    designed the whole interface.
+                    I illustrated every card and figure myself and designed a layout that works on any screen, from a
+                    phone held upright to a wide monitor. The game later grew into Schafi, which plays online with the
+                    classic Bavarian deck.
                 </p>
-                <p className="story-badge">Coming soon to Google Play</p>
-                <a className="button button-dark" href={ALMSOMMER_URL} target="_blank" rel="noopener noreferrer">
-                    Play in the browser
-                </a>
             </>
         ),
     },
@@ -155,24 +147,11 @@ const slides: Slide[] = [
         ),
     },
     {
-        kicker: 'Game logic',
-        title: 'Trumps at a glance',
-        visual: (active) => <TrumpHand active={active} />,
-        text: (
-            <>
-                <p>
-                    Which cards are trumps depends on the game being played, and that is the hardest part for
-                    newcomers. So the hand sorts itself: trumps move to the left, strongest first, rise slightly and
-                    get a crown.
-                </p>
-                <p>
-                    The rules engine decides which cards are legal for every move: following suit, trumps, and the
-                    special rules for the called sheep. Cards you can't play are greyed out, so you never get an error
-                    message.
-                </p>
-                <p className="story-try">Try it: pick a game below the hand.</p>
-            </>
-        ),
+        kicker: 'All 24 cards',
+        title: 'The whole deck',
+        wide: true,
+        visual: (active) => <DeckGrid active={active} />,
+        text: <p className="story-try">Click a card to see it large.</p>,
     },
     {
         kicker: 'Responsive design',
@@ -190,25 +169,6 @@ const slides: Slide[] = [
                     the first raises it, the second plays it – so you can't play the wrong card by accident.
                 </p>
                 <p>One Expo / React Native codebase runs on Android, iOS and the web.</p>
-            </>
-        ),
-    },
-    {
-        kicker: 'Computer players',
-        title: 'Smart Opponents',
-        visual: () => <img className="story-shot" src={choiceLandscape} alt="The game picker with Sheep Game, Solo, Dog Game and Marriage" loading="lazy" />,
-        text: (
-            <>
-                <p>
-                    The three opponents decide what to play by counting their trumps. When they play cards, they know
-                    who their partner is: they add points to a trick their partner is sure to win, take valuable tricks
-                    as cheaply as possible, and search for the called sheep.
-                </p>
-                <p>
-                    Five game types follow the rulebook – Sheep Game, Solo, Dog Game, Marriage and the Cowards Game
-                    when everybody passes. Scoring is zero-sum, and the rules, computer players and scoring are covered
-                    by unit tests.
-                </p>
             </>
         ),
     },
@@ -236,13 +196,6 @@ const slides: Slide[] = [
                 </p>
             </>
         ),
-    },
-    {
-        kicker: 'All 24 cards',
-        title: 'The whole deck',
-        wide: true,
-        visual: (active) => <DeckGrid active={active} />,
-        text: null,
     },
 ];
 

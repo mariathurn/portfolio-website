@@ -4,28 +4,33 @@
 
 ![Maria Thurn – Software Developer](public/og-image.jpg)
 
-My personal portfolio: a single-page site that introduces me as a software developer with a background in
-graphic design, and shows my projects in interactive slideshows.
+My personal portfolio: a small multi-page site that introduces me as a software developer with a background
+in graphic design. Projects come first; everything else follows.
 
 Built with **React 19**, **TypeScript** and **Vite**, styled with plain CSS. No UI library, no animation
 library, no runtime dependencies besides React.
 
+## Pages
+
+| Page | URL | Entry |
+|---|---|---|
+| Home: hero, selected work, how I work, about, contact | `/` | `index.html` → `src/main.tsx` |
+| Case study: Schafi | `/work/schafi/` | `work/schafi/index.html` → `src/schafi.tsx` |
+
+Each page is its own HTML file (Vite multi-page build), so the URLs work on any static host without rewrites.
+
+Deep links: `/#husk` and `/#almsommer` open the slideshows on the home page.
+
 ## Highlights
 
-- **Skill runner game** – the Skills section is a small side-scrolling game on `<canvas>`: a pixel wizard
-  jumps over bugs and collects skill bubbles. Retro sound effects are synthesised with the Web Audio API,
-  without audio files. A plain table lists the same skills for anyone who'd rather not play.
-- **Project slideshows** – one reusable `ProjectStory` dialog with arrow buttons, arrow keys,
-  swipe on touch screens, dots and deep links (`/#almsommer`, `/#husk`). Slides can hold live demos, e.g. a hand of cards that
-  re-sorts its trumps when you pick a different game, or a review card that flips over.
-- **Character sheet** – the About section is written as a tabletop RPG character sheet, with an SVG
-  pixel portrait drawn from a sprite map.
-- **Light and dark mode** – follows the device setting until the visitor flips the lever in the navbar.
-  The theme is applied before React loads, so there is no flash of the wrong colours.
-- **Accessible** – semantic headings and landmarks, labelled controls, native `<dialog>` for modals
-  (focus handling and Esc for free), keyboard support throughout and `prefers-reduced-motion` respected.
-- **Responsive** – layouts adapt from phone to wide screens; the navbar colour follows the section in
-  view (`IntersectionObserver`).
+- **Design tokens** – colours, type, spacing and shared components live in `src/styles/tokens.css`.
+  Every text colour passes WCAG AA in light and dark mode.
+- **Light and dark mode** – follows the device setting; the toggle in the navbar overrides it and is
+  remembered. `public/theme-init.js` applies the theme before React loads, so there is no flash.
+- **Slideshows** (Husk, Almsommer) – a reusable `ProjectStory` dialog with arrow buttons, arrow keys, swipe,
+  dots and live demos (a review card that flips over, the whole illustrated deck with a lightbox).
+- **Accessible** – semantic headings and landmarks, 44px touch targets, visible focus, native `<dialog>`,
+  keyboard support throughout and `prefers-reduced-motion` respected.
 
 ## Getting started
 
@@ -43,18 +48,20 @@ npm run lint     # run ESLint
 
 ```
 src/
-  components/   # One component per section, plus the slideshows and the skill game
-  data/         # Skills, card deck and pixel sprites as plain data
-  styles/       # One stylesheet per component; global.css holds the shared design tokens
+  components/   # Page sections, the Schafi case study and the Husk slideshow
+  styles/       # tokens.css (design tokens), site.css (layout), one file per slideshow
   assets/       # Images, screenshots, CV and thesis
-  sound.ts      # Web Audio sound effects for the game
-public/         # Favicons, social preview image, privacy page, robots.txt and sitemap
+work/schafi/    # HTML entry of the case study
+public/         # Favicons, theme script, social preview image, privacy page, robots.txt and sitemap
 ```
 
 ## Projects shown on the site
 
-- **Almsommer** – the Bavarian card game Schafkopf for Android, iOS and the web, with my own illustrated
-  deck. [Play in the browser](https://almsommer.mariathurn.de/)
+- **Schafi** – the Bavarian card game Schafkopf for Android, iOS and the web, online with friends or against
+  computer players that think ahead. [Play in the browser](https://schafi.app/spielen/) ·
+  [Case study](https://mariathurn.de/work/schafi/)
+- **Almsommer** – the first version of the game, with a deck of 24 cards I illustrated myself and a layout
+  that adapts from phone to wide screen.
 - **Husk** – an offline-first app for learning Danish vocabulary with spaced repetition.
 - **Donut Wars** – a 2D survival game made in Unity. [Play on itch.io](https://mariagamingcorner.itch.io/donut-wars)
 - **Master's thesis** – how multilingual transformer models represent named entities.

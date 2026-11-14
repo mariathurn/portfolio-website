@@ -9,27 +9,23 @@
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <!-- Same saved theme as the main page (see ThemeLever.tsx) -->
-  <script>
-    try {
-      if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
-    } catch (e) { }
-  </script>
+  <!-- Same theme as the other pages (see ThemeToggle.tsx) -->
+  <script src="/theme-init.js"></script>
 
   <style>
     :root {
-      --color-bg: #fff;
-      --color-text: #1f2328;
-      --color-text-muted: #57606a;
-      --color-accent: #2E653D;
+      --color-bg: #F6F5F2;
+      --color-text: #161616;
+      --color-text-muted: #5F5E5A;
+      --color-accent: #2F4BFF;
     }
 
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --color-bg: #1d1830;
-      --color-text: #ebe6f3;
-      --color-text-muted: #a9a2b8;
-      --color-accent: #8fc79f;
+      --color-bg: #121212;
+      --color-text: #F2F1EE;
+      --color-text-muted: #9E9D98;
+      --color-accent: #8095FF;
     }
 
     * {

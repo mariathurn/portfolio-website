@@ -1,49 +1,51 @@
-import '../styles/About.css';
-import profilePicture from '../assets/profile-picture.jpeg'
-import cv from '../assets/CV.pdf'
-import SpeechBubble from './SpeechBubble';
-import CharacterSheet from './CharacterSheet';
-import GithubIcon from './GithubIcon';
-import { GITHUB_URL } from '../links';
+const skillGroups = [
+    { title: 'Apps & frontend', skills: 'React, React Native, Expo, TypeScript, REST APIs, HTML/CSS' },
+    { title: 'Design', skills: 'Figma, UI design, typography, illustration, 3D visualisation' },
+    { title: 'Software & AI', skills: 'Python, C#, Unity, Git, NLP, transformer models' },
+];
+
+const experience = [
+    { years: '2025–26', role: 'Programming Teaching Assistant', company: 'University of Copenhagen' },
+    { years: '2021–23', role: 'Technical Support', company: 'Mercedes-Benz CSC' },
+    { years: '2019–20', role: '3D Visualisation Designer', company: 'Siemens Healthineers' },
+    { years: '2017–18', role: '3D Design Intern', company: 'Adidas, Digital Creation' },
+];
 
 function About() {
-  return (
-    <section id="about" className="about">
-      <div className='about-block'>
-        <img className="profile-picture" src={profilePicture} alt="Portrait of Maria Thurn" />
-        <article className='text-block'>
-          <h1 className="section-title">Hej, I'm Maria!</h1>
-          <SpeechBubble className="about-lead">
-            {/* Terminal look: prompt in front, blinking cursor at the end; &nbsp; keeps the last two words together */}
-            <span className="prompt" aria-hidden="true">&gt; </span>
-            I'm a software developer with a background in graphic&nbsp;design. I build products that are both beautiful and easy to&nbsp;use.
-            <span className="cursor" aria-hidden="true" />
-          </SpeechBubble>
-
-          <ul className="about-facts" aria-label="Quick facts">
-            <li><span aria-hidden="true">📍</span> Copenhagen</li>
-            <li><span aria-hidden="true">🎓</span> MSc IT &amp; Cognition</li> {/*https://www.ku.dk/studies/masters/it-and-cognition*/}
-            <li><span aria-hidden="true">🎨</span> BA Graphic Design</li>          {/*   https://www.artstation.com/mariathurn */}
-          </ul>
-
-          <ul className="about-facts about-links" aria-label="Links">
-            <li>
-              <a className="link-chip" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
-                <GithubIcon /> GitHub
-              </a>
-            </li>
-            <li>
-              <a className="link-chip" href={cv} target="_blank" rel="noopener noreferrer">
-                <span aria-hidden="true">📄</span> Open CV
-              </a>
-            </li>
-          </ul>
-        </article>
-      </div>
-
-      <CharacterSheet />
-    </section>
-  );
+    return (
+        <section id="about" className="container section about" aria-labelledby="about-title">
+            <div className="about-text">
+                <h2 id="about-title" className="h2">About</h2>
+                <p className="text-secondary measure">
+                    I studied graphic design (BA, TH Nürnberg) and IT &amp; Cognition (MSc, University of Copenhagen).
+                    Before moving into software, I worked in 3D design at Adidas and Siemens Healthineers and in
+                    technical support at Mercedes-Benz. Originally from Bavaria, now in Copenhagen.
+                </p>
+                <div className="skill-groups">
+                    {skillGroups.map((group) => (
+                        <div key={group.title}>
+                            <h3 className="label">{group.title}</h3>
+                            <p className="text-small">{group.skills}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="experience">
+                <h3 className="label">Experience</h3>
+                <ul className="experience-list">
+                    {experience.map((item) => (
+                        <li key={item.years}>
+                            <span className="experience-years">{item.years}</span>
+                            <div>
+                                <p className="experience-role">{item.role}</p>
+                                <p className="experience-company">{item.company}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+    );
 }
 
 export default About;

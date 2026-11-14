@@ -10,12 +10,11 @@
   <title>Maria Thurn – Software Developer</title>
   <meta name="description"
     content="Software engineer in Copenhagen with a design background. I build web apps and interactive experiences with React, TypeScript and Unity.">
-  <meta name="theme-color" content="#2E653D">
+  <meta name="theme-color" content="#F6F5F2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
 
-  <!-- Apply the device's theme before the page renders (see ThemeLever.tsx) -->
-  <script>
-    document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  </script>
+  <!-- Applies the saved or device theme before the page renders (see ThemeToggle.tsx) -->
+  <script src="/theme-init.js"></script>
 
   <!-- Umami analytics (cookieless); data-domains keeps local dev visits out of the stats -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="7d6ca4e6-3514-4cb8-9a7e-beed51d9e6fa"
@@ -28,10 +27,10 @@
   <meta property="og:title" content="Maria Thurn – Software Developer">
   <meta property="og:description"
     content="Software engineer in Copenhagen with a design background. I build web apps and interactive experiences with React, TypeScript and Unity.">
-  <meta property="og:image" content="https://mariathurn.de/og-image.jpg?v=2">
+  <meta property="og:image" content="https://mariathurn.de/og-image.jpg?v=3">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Maria Thurn – Software Developer. React, TypeScript, Unity.">
+  <meta property="og:image:alt" content="Maria Thurn – Software developer with a designer’s eye. Open to developer roles in Copenhagen and remote.">
   <meta name="twitter:card" content="summary_large_image">
 
   <script type="application/ld+json">
@@ -63,7 +62,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Rubik+One&family=Rubik+Scribble&family=Rubik:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 </head>
 
