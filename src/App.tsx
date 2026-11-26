@@ -20,8 +20,8 @@ function App() {
                 <section className="container hero" aria-labelledby="hero-title">
                     <div className="hero-text">
                         <p className="status-chip">Open to developer roles · Copenhagen &amp; remote</p>
-                        <h1 id="hero-title" className="display hero-title">Software developer with a designer’s eye.</h1>
-                        <p className="lead hero-lead">I design and build mobile and web apps – from Figma mockup to working product. Based in Copenhagen.</p>
+                        <h1 id="hero-title" className="display hero-title">I build apps and games – from first idea to release.</h1>
+                        <p className="lead hero-lead">Software developer in Copenhagen working with React Native, TypeScript and Unity.</p>
                         <div className="button-row">
                             <a className="btn btn--primary" href="#work">See my projects <ArrowDown size={18} /></a>
                             <a className="btn btn--secondary" href={cv} target="_blank" rel="noopener noreferrer">Download CV</a>
